@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Route, Link} from 'react-router-dom'
+import 'font-awesome/css/font-awesome.min.css'
 
 const menus = [
   {
@@ -44,14 +45,42 @@ const MenuLink = ({label, to, ActiveOnlyWhenExact}) => {
 }
 
 class Menu extends Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+      loggedUser : "",
+      isLogin : false
+    }
+  }
+  
   render() {
+    var {isLogin} = this.state
+    var loggedUser = localStorage.getItem("user")
+    if(loggedUser !== null){
+      isLogin = true
+    }
+    window.addEventListener('storage', function(e){
+      this.console.log(e)
+    })
+    // console.log(isLogin)
     return (
-        <div className="navbar navbar-default">
-          <b className="navbar-brand" href="">Call API</b>
-          <ul className="nav navbar-nav">
+        <nav className="navbar navbar-inverse">
+          <div className="container-fluid">
+          <div className="navbar-header">
+          {/* <img/> */}
+          </div>
+            <ul className="nav navbar-nav">
             { this.showMenus(menus) }
-          </ul>
-        </div>
+            </ul>
+            <ul className="nav navbar-nav navbar-right">
+            { (isLogin === false) ? 
+              <li><Route><Link to = "/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></Route></li> : 
+              <li><Route><Link to = "/logout"><span className="glyphicon glyphicon-log-in"></span> Log Out</Link></Route></li>}
+            </ul>
+          </div>
+        </nav>
+        
     );
   }
   showMenus = (menus) =>{

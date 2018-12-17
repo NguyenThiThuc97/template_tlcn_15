@@ -56,10 +56,10 @@ class CustomerActionPage extends Component {
         var {history} = this.props
         
         e.preventDefault()//not submit page
-        
         if(id)
         {
-            if(imgImage){//want to update image
+            if( imgImage.length == null){//want to update image //undefined
+                
                 const data = new FormData();
                 data.append('id', id)
                 data.append('image', imgImage);
@@ -67,19 +67,18 @@ class CustomerActionPage extends Component {
                 data.append('full_name', txtFullName);
                 data.append('address', txtAddress);
                 data.append('mail', txtMail);
-                data.append('password', txtPassword);
                 data.append('phone', txtPhone);
                 callAPI("customer/update", "POST", data).then(res => {
                     history.goBack()
                 })
             }
             else{
+                
                 callAPI("customer/update", "POST", {
                     id : id,
                     username : txtUsername,
                     full_name : txtFullName,
                     address : txtAddress,
-                    image : imgImage,
                     mail : txtMail,
                     phone : txtPhone
                 }).then(res => {
@@ -102,9 +101,7 @@ class CustomerActionPage extends Component {
                 history.goBack()
                 // history.push("")
             })
-        }
-
-        
+        } 
     }
 
     render() {

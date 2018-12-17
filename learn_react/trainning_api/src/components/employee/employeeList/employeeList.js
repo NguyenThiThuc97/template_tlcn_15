@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CompanyList extends Component {
+class EmployeeList extends Component {
     render() {
         return (
             <div className="panel panel-primary">
@@ -13,12 +13,12 @@ class CompanyList extends Component {
                         <tr>
                             <th> No</th>
                             <th> ID</th>
-                            <th> Name</th>
-                            {/* <th> Mail</th>
-                            <th> Website</th>
-                            <th> Fanpage</th> */}
+                            <th> Username</th>
+                            <th> Full Name</th>
+                            <th> Mail</th>
                             <th> Phone</th>
                             <th> Address</th>
+                            <th> Department</th>
                             <th> Action</th>
                         </tr>
                         </thead>
@@ -32,4 +32,4 @@ class CompanyList extends Component {
     }
 }
 
-export default CompanyList;
+export default EmployeeList;

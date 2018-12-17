@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import callAPI from '../../../utils/apiCaller'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import CompanyList from './../../../components/company/companyList/companyList'
 import CompanyItem  from '../../../components/company/companyItem/companyItem'
 
@@ -16,10 +16,12 @@ class CompanyListPage extends Component {
     }
 
     componentDidMount(){
+        var loggedInUser = JSON.parse(localStorage.getItem('user'))
         callAPI("company", "GET", null).then(res =>{
             this.setState({
                 companies : res.data,
-                isLoad : true
+                isLoad : true,
+                loggedInUser : loggedInUser
             })
         })
     }
@@ -54,7 +56,13 @@ class CompanyListPage extends Component {
     }
 
     render() {
-        var { companies, isLoad } = this.state
+        var { companies, isLoad, loggedInUser } = this.state
+        
+        if(loggedInUser === null)
+        {
+            return <Redirect to = "/login" />
+        }
+
         if( !isLoad ){
             return <div>Loading...</div>
         }

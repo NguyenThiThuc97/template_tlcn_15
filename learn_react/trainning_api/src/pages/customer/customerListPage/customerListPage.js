@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import callAPI from '../../../utils/apiCaller'
-import {Link} from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import CustomerList from '../../../components/customer/customerList/customerList'
 import CustomerItem  from '../../../components/customer/customerItem/customerItem'
 
@@ -8,18 +8,22 @@ class CustomerListPage extends Component {
 
     constructor(props)
     {
+        
         super(props)
         this.state = {
             customers : [],
-            isLoad : false
+            isLoad : false,
+            loggedInUser : ""
         }
     }
 
     componentDidMount(){
+        var loggedInUser = JSON.parse(localStorage.getItem('user'))
         callAPI("customer", "GET", null).then(res =>{
             this.setState({
                 customers : res.data,
-                isLoad : true
+                isLoad : true,
+                loggedInUser : loggedInUser
             })
         })
     }
@@ -52,9 +56,16 @@ class CustomerListPage extends Component {
 
         return result;
     }
-
+    
     render() {
-        var { customers, isLoad } = this.state
+
+        var { customers, isLoad, loggedInUser } = this.state
+        
+        if(loggedInUser === null)
+        {
+            return <Redirect to = "/login" />
+        }
+
         if( !isLoad ){
             return <div>Loading...</div>
         }

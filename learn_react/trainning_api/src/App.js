@@ -2,14 +2,39 @@ import React, { Component } from 'react';
 import './App.css';
 import Menu from './components/menu/menu'
 import routes from "./routes"
-import {Switch, Route, BrowserRouter as Router} from 'react-router-dom'
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faStroopwafel } from '@fortawesome/free-solid-svg-icons'
+
+// library.add(faStroopwafel)
 
 class App extends Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+      loggedUser : "",
+      username : "",
+      isLogin : false
+    }
+  }
+
+  componentWillMount(){
+    if(localStorage.getItem("user")){
+      this.setState({
+        loggedUser : localStorage.getItem("user"),
+        isLogin : true
+      })
+    }
+  }
+
   render() {
+    var {isLogin} = this.state
     return (
       <Router>
-        <div>
-          <Menu/>
+          <div><Menu isLogin = {isLogin}/>
           <div className="container">
             { this.showContentMenus(routes) }
           </div>
@@ -22,6 +47,7 @@ class App extends Component {
     if(routes.length > 0)
     {
       result = routes.map((route, index) => {
+        
         return (<Route
           key = {index}
           path = {route.path}

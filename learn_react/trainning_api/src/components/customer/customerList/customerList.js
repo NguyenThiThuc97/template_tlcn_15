@@ -19,7 +19,7 @@ class CustomerList extends Component {
                             <th> Image</th>
                             <th> Phone</th>
                             <th> Address</th>
-                            <th> Password</th>
+                            {/* <th> Password</th> */}
                             <th> Action</th>
                         </tr>
                         </thead>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import callAPI from './../../../utils/apiCaller';
+import callAPI from '../../../utils/apiCaller';
 import {Link} from 'react-router-dom'
 class CompanyActionPage extends Component {
 

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import ProductList from '../../components/productList/productList'
-import ProductItem from '../../components/productItem/productItem'
 import {connect} from 'react-redux'
-import callAPI from './../../utils/apiCaller'
-import {Link} from 'react-router-dom'
+import callAPI from '../../../utils/apiCaller'
+import { Link, Redirect } from 'react-router-dom'
+
+import ProductList from '../../../components/product/productList/productList'
+import ProductItem from '../../../components/product/productItem/productItem'
+// import { actFetchProduct } from '../../actions/index'
 
 class ProductListPage extends Component {
 
@@ -11,21 +13,35 @@ class ProductListPage extends Component {
     super(props)
     this.state = {
       products : [], 
-      isLoad : false
+      isLoad : false,
+      loggedInUser : ""
     }
   }
 
   componentDidMount (){//is called after component render first time
+
+    var loggedInUser = JSON.parse(localStorage.getItem('user'))
+
     callAPI("product", "GET", null).then(res=>
       {
-        this.setState({products : res.data, isLoad : true})
+        this.setState({
+          products : res.data, 
+          isLoad : true,
+          loggedInUser : loggedInUser
+        })
       })
   
   }
 
   render() {
     // var {products} = this.props
-    var { isLoad, products } = this.state
+    var { isLoad, products, loggedInUser } = this.state
+
+    if(loggedInUser === null)
+        {
+            return <Redirect to = "/login" />
+        }
+
     if(!isLoad)
     {
       return <div>loading..</div>
@@ -67,4 +83,12 @@ const mapStateToProps = state => {
     products : state.products        // because we have combined to products in index.js of reducers 
   }
 }
+
+// const mapDispatchToProps = (dispatch, props) => {
+//   return {
+//     fetchAllProducts = (products) => {
+//       dispatch(actFetchProduct(products))
+//     }
+//   }
+// }
 export default connect(mapStateToProps, null)(ProductListPage);

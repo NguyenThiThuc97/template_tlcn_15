@@ -20,7 +20,7 @@ class CustomerItem extends Component {
                 <td>{customer.image}</td>
                 <td>{customer.phone}</td>
                 <td>{customer.address}</td>
-                <td>{customer.password}</td>
+                {/* <td>{customer.password}</td> */}
                 <td>
                     <Link to = {`/customer/edit/${customer.id}`} className="btn btn-success mr-10">Edit</Link>
                     
