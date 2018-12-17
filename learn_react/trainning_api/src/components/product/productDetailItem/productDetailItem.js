@@ -9,10 +9,10 @@ class ProductDetailItem extends Component {
 
     render() {
         var {productDetail, index} = this.props;
+        
         var product_id = productDetail.product_id
         var size = productDetail.size
         var color = productDetail.color
-
         return (
             <tr>
             <td>{index + 1}</td>

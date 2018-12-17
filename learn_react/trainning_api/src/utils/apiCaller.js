@@ -3,7 +3,7 @@ import * as Config from '../constants/Config'
 
 export const callAPI = (endPoint, method = "GET", body, uploadFile = false) => {
   if(uploadFile) {
-    console.log("aa")
+    
     var formData = new FormData()
     for (var val in body){
       formData.append(val, body[val])
@@ -19,6 +19,7 @@ export const callAPI = (endPoint, method = "GET", body, uploadFile = false) => {
     }).catch(error => console.log(error));
   }
   else{
+    // console.log(body)
     return axios({
       method: method,
       url: `${Config.API_URL}/${endPoint}`,

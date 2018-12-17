@@ -23,12 +23,14 @@ class Company extends Component {
         })
     }
 
+
+
     render() {
         var {companies, isLoad, companyIsSelected} = this.state
         if(isLoad){
             return (
                 <FormGroup>
-                    <Input type="select" name="size" id="exampleSelect" value = {companyIsSelected}>
+                    <Input type="select" name="company" id="exampleSelect" value = {this.props.value} onChange = {this.props.onChange}>
                         {this.showCompanies(companies)}
                     </Input>
                 </FormGroup>

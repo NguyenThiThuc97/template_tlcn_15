@@ -28,7 +28,7 @@ class Color extends Component {
         if(isLoad){
             return (
                 <FormGroup>
-                    <Input type="select" name="size" id="exampleSelect" value = {colorIsSelected}>
+                    <Input type="select" name="color" id="exampleSelect" value = {this.props.value} onChange = {this.props.onChange}>
                         {this.showColor(colors)}
                     </Input>
                 </FormGroup>

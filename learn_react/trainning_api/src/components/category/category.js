@@ -9,7 +9,7 @@ class Category extends Component {
         this.state = {
             categories : "",
             isLoad : false,
-            categoryIsSelected : ""
+            categoryIsSelected : "",
         }
     }
 
@@ -29,10 +29,11 @@ class Category extends Component {
         if(isLoad){
             return (
                 <FormGroup>
-                    <Input type="select" name="size" id="exampleSelect" value = {categoryIsSelected}>
+                    <Input type="select" name="category" id="exampleSelect" value = {this.props.value} onChange = {this.props.onChange}>
                         {this.showCategories(categories)}
                     </Input>
                 </FormGroup>
+                
             );
         }
         else {

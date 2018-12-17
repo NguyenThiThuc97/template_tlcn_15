@@ -25,7 +25,7 @@ class Size extends Component {
         if(isLoad){
             return (
                 <FormGroup>
-                    <Input type="select" name="size" id="exampleSelect" value = {selected}>
+                    <Input type="select" name="size" id="exampleSelect" value = {this.props.value} onChange = {this.props.onChange}>
                         { this.showColor(colorArr) }
                     </Input>
                 </FormGroup>

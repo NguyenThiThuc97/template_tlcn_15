@@ -11,37 +11,39 @@ class ProductDetailActionPage extends Component {
         super(props)
         this.state = {
             product_id : "",
-            size : "",
-            color : "",
+            size : "S",
+            color : 3,
             quantity : 0,
             date_received : "",
-            isLoad : false
+            isLoad : false,
+            price: 0
         }
     }
 
     componentDidMount(){
         if(this.props.match.params.size && this.props.match.params.color){//update
+            
             var product_id = this.props.match.params.product_id
             var size = this.props.match.params.size
             var color = this.props.match.params.color
-
+            
             callAPI(`product_detail/view/${product_id}/${size}/${color}`, "GET", null).then(res => {
                 var product_detail = res.data
-                
+                // console.log(res.data)
                 this.setState({
                     product_id : product_detail.product_id,
                     size : product_detail.size,
                     color : product_detail.color,
                     quantity : product_detail.quantity,
                     date_received : product_detail.date_received,
-                    isLoad : true
+                    isLoad : true,
+                    price : product_detail.price
                 })
                 
             })
         }
         else if(this.props.match){
             var product_id = this.props.match.params.product_id
-            // console.log(this.props.match)
             this.setState({
                 product_id : product_id,
                 isLoad : true
@@ -57,11 +59,30 @@ class ProductDetailActionPage extends Component {
         this.setState({
             [name] : value
         })
+        // console.log(this.state)
+    }
+
+    onSave = (e) => {
+        var {product_id, size, color, quantity, price, date_received} = this.state
+        var {history} = this.props
+        var dataProductDetail = {
+            product_id : product_id,
+            size : size,
+            color : color,
+            quantity : quantity, 
+            price : price,
+            date_received : date_received
+        }
+        e.preventDefault()
+        callAPI("product_detail/create", "POST", dataProductDetail).then(res => {
+            history.goBack()
+        })
     }
 
     render() {
         var {product_id, size, color, quantity, date_received, price, isLoad} = this.state
         if(isLoad){
+            // console.log(this.state)
             return (
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <Form onSubmit = {this.onSave}>
@@ -78,9 +99,9 @@ class ProductDetailActionPage extends Component {
                         <input 
                             type="number" 
                             className="form-control" 
-                            // name = "txtMail"
+                            name = "price"
                             onChange = { this.onChange }
-                            // value = {txtMail}
+                            value = {price}
                             />
                     </div>
                     <div className="form-group">
@@ -88,19 +109,22 @@ class ProductDetailActionPage extends Component {
                         <input 
                             type="number" 
                             className="form-control" 
-                            // name = "txtPhone" 
+                            name = "quantity" 
                             onChange = { this.onChange }
-                            // value = { !!(txtPhone) ? txtPhone: "" }
+                            value = { quantity }
                         />
                     </div>
                     <FormGroup>
                         <Label for="exampleDatetime"> Date Received</Label>
-                        <Input type="datetime" name="datetime" id="exampleDatetime" placeholder="datetime placeholder" onChange = { this.onChange }/>
+                        <input type="date" name="date_received" id="date_received" className="form-control" value={date_received} onChange = {this.onChange}/>
                     </FormGroup>
                     <button type="submit" className="btn btn-primary mr-10">Save</button>
                     <Link to = {`/product/edit/${product_id}`} className = "btn btn-danger "> Back to list</Link>
                     </Form>
                 </div> 
+                
+                
+                
             );
         }
         else{

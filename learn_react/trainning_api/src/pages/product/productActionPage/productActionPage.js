@@ -12,17 +12,18 @@ class ProductActionPage extends Component {
       id : "",
       productName : "",
       alias : "",
-      company : "",
+      company :0,
       companyName : "",
-      category : "",
+      category : 0,
       categoryName : "",
       image : "",
+      action : false //true: update, false: create
     }
   }
 
   componentDidMount(){
     var {match} = this.props
-    if(match){
+    if(match){//update
 
       var id = match.params.id
       callAPI(`product/${id}`, 'GET', null).then(res => {
@@ -37,7 +38,8 @@ class ProductActionPage extends Component {
             companyName : product.CompanyName,
             category : product.category,
             categoryName : product.CategoryName,
-            image : product.image
+            image : product.image,
+            action :  true
         })
       })
     }
@@ -46,12 +48,12 @@ class ProductActionPage extends Component {
 
   onChange = (e) => {
     var target = e.target
-        var name = target.name
-        
-        var value = target.type === 'file' ? target.files[0] : target.value
-        this.setState({
-            [name] : value
-        })
+    var name = target.name
+    
+    var value = target.type === 'file' ? target.files[0] : target.value
+    this.setState({
+        [name] : value
+    })
   }
 
   onSave = (e) => {
@@ -71,7 +73,7 @@ class ProductActionPage extends Component {
                 data.append('category', category);
                 data.append('company', company);
                 callAPI("product/update", "POST", data).then(res => {
-                    history.goBack()
+                  history.push("/product-list")
                 })
             }
             else{
@@ -83,14 +85,14 @@ class ProductActionPage extends Component {
                     category : category,
                     company : company,
                 }).then(res => {
-                    history.goBack()
+                  history.push("/product-list")
                 })
             }
             
         }
         else
         {
-          console.log("product create")
+          
             const data = new FormData();
             data.append('name', productName);
             data.append('alias', alias);
@@ -99,14 +101,14 @@ class ProductActionPage extends Component {
             data.append('image', image);
             callAPI("product/create", "POST", data, true).then(res => {
               console.log(res)
-                history.goBack()
+                history.push("/product-list")
                 // history.push("")
             })
         }
   }
 
   render() {
-    var { id, productName, alias, category, company, image } = this.state
+    var { id, productName, alias, category, company, image, action } = this.state
     
     return(
       <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10">
@@ -127,12 +129,12 @@ class ProductActionPage extends Component {
           </div>
           <div className="form-group">
             <label> Category Name</label>
-            <Category name = "category" value = {category ? category : ""}/>
+            <Category  value = {category} onChange = { this.onChange }/>
             {/* <input type="text" className="form-control" onChange = {this.onChange} value = { categoryName } name = "category"/> */}
           </div>
           <div className="form-group">
             <label> Company Name</label>
-            <Company name = "company" value = {company ? company : ""}/>
+            <Company  value = {company} onChange = { this.onChange }/>
             {/* <input type="text" className="form-control" onChange = {this.onChange} value = { companyName }/> */}
           </div>
           <div className="form-group">
