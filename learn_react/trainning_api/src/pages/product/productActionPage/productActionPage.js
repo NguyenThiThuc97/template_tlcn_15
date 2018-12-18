@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import callAPI from '../../../utils/apiCaller';
+import callAPI, { callImage } from '../../../utils/apiCaller';
 import ProductDetailListPage from '../productDetailListPage/productDetailListPage';
 import Category from '../../../components/category/category';
 import Company from '../../../components/company/company';
@@ -140,6 +140,7 @@ class ProductActionPage extends Component {
           <div className="form-group">
             <label> Image</label>
             <input type="file" className="form-control" onChange = {this.onChange} name = "image"/>
+            <img src={callImage("GET", "product", image)} className="img-responsive" alt="Product Image"></img>
           </div>
           
           <button type="submit" className="btn btn-primary mr-10">Save</button>

@@ -21,7 +21,7 @@ class Size extends Component {
 
     render() {
         var colorArr = ["S", "M", "L", "XL", "XXL", "XXXL"]
-        var {selected, isLoad} = this.state
+        var {isLoad} = this.state
         if(isLoad){
             return (
                 <FormGroup>

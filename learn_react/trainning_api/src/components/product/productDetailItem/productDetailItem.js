@@ -9,8 +9,8 @@ class ProductDetailItem extends Component {
 
     render() {
         var {productDetail, index} = this.props;
-        
-        var product_id = productDetail.product_id
+        if(this.props.productDetail){
+            var product_id = productDetail.product_id
         var size = productDetail.size
         var color = productDetail.color
         return (
@@ -33,6 +33,10 @@ class ProductDetailItem extends Component {
             </td>
             </tr>
         );
+        }
+        else {
+            return null
+        }
     }
 }
 

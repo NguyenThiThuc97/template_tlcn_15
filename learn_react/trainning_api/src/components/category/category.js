@@ -25,7 +25,7 @@ class Category extends Component {
     }
 
     render() {
-        var {categories, isLoad, categoryIsSelected} = this.state
+        var {categories, isLoad} = this.state
         if(isLoad){
             return (
                 <FormGroup>

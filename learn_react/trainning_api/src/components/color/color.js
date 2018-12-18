@@ -24,7 +24,7 @@ class Color extends Component {
     }
 
     render() {
-        var {colors, isLoad, colorIsSelected} = this.state
+        var {colors, isLoad} = this.state
         if(isLoad){
             return (
                 <FormGroup>

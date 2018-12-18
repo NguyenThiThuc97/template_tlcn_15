@@ -26,7 +26,7 @@ class Company extends Component {
 
 
     render() {
-        var {companies, isLoad, companyIsSelected} = this.state
+        var {companies, isLoad} = this.state
         if(isLoad){
             return (
                 <FormGroup>

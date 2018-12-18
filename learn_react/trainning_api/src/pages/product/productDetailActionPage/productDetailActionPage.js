@@ -3,7 +3,7 @@ import callAPI from '../../../utils/apiCaller';
 import Size from './../../../components/size/size'
 import Color from '../../../components/color/color'
 import {Link} from 'react-router-dom'
-import {Input, FormGroup, Label, Form} from 'reactstrap'
+import { FormGroup, Label, Form} from 'reactstrap'
 
 class ProductDetailActionPage extends Component {
 
@@ -16,7 +16,10 @@ class ProductDetailActionPage extends Component {
             quantity : 0,
             date_received : "",
             isLoad : false,
-            price: 0
+            price: 0,
+            action : false, // action === false ? "add" : "update",
+            old_color : 0,
+            old_size : ""
         }
     }
 
@@ -24,8 +27,8 @@ class ProductDetailActionPage extends Component {
         if(this.props.match.params.size && this.props.match.params.color){//update
             
             var product_id = this.props.match.params.product_id
-            var size = this.props.match.params.size
-            var color = this.props.match.params.color
+            var size = this.props.match.params.size     //old
+            var color = this.props.match.params.color   //old
             
             callAPI(`product_detail/view/${product_id}/${size}/${color}`, "GET", null).then(res => {
                 var product_detail = res.data
@@ -37,12 +40,15 @@ class ProductDetailActionPage extends Component {
                     quantity : product_detail.quantity,
                     date_received : product_detail.date_received,
                     isLoad : true,
-                    price : product_detail.price
+                    price : product_detail.price,
+                    action : true,
+                    old_size : size,
+                    old_color : color
                 })
                 
             })
         }
-        else if(this.props.match){
+        else if(this.props.match){//add
             var product_id = this.props.match.params.product_id
             this.setState({
                 product_id : product_id,
@@ -63,7 +69,7 @@ class ProductDetailActionPage extends Component {
     }
 
     onSave = (e) => {
-        var {product_id, size, color, quantity, price, date_received} = this.state
+        var {product_id, size, color, quantity, price, date_received, old_color, old_size} = this.state
         var {history} = this.props
         var dataProductDetail = {
             product_id : product_id,
@@ -71,10 +77,13 @@ class ProductDetailActionPage extends Component {
             color : color,
             quantity : quantity, 
             price : price,
-            date_received : date_received
+            date_received : date_received,
+            old_color : old_color,
+            old_size : old_size
         }
         e.preventDefault()
         callAPI("product_detail/create", "POST", dataProductDetail).then(res => {
+            console.log(res)
             history.goBack()
         })
     }
