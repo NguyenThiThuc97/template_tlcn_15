@@ -20,6 +20,9 @@ import LogOut from './components/logout/logOut';
 import ProductDetailListPage from './pages/product/productDetailListPage/productDetailListPage';
 import ProductDetailActionPage from './pages/product/productDetailActionPage/productDetailActionPage'
 
+import CategoryActionPage from './pages/category/categoryActionPage/categoryActionPage';
+import CategoryListPage from './pages/category/categoryListPage/categoryListPage'
+
 const routes = [
     {
         path : "/",
@@ -100,6 +103,21 @@ const routes = [
         path : "/employee/edit/:id",
         exact : false,
         main : ({match, history}) => <EmployeeActionPage match = {match} history = {history}/>
+    },
+    {//category
+        path : '/category-list',
+        exact : false,
+        main : () => <CategoryListPage/>
+    },
+    {
+        path : "/category/add",
+        exact : false,
+        main : ({history}) => <CategoryActionPage history = {history}/>
+    },
+    {
+        path : "/category/edit/:id",
+        exact : false,
+        main : ({match, history}) => <CategoryActionPage match = {match} history = {history}/>
     },
     //login
     {

@@ -108,7 +108,7 @@ class ProductActionPage extends Component {
   }
 
   render() {
-    var { id, productName, alias, category, company, image, action } = this.state
+    var { id, productName, alias, category, company, image } = this.state
     
     return(
       <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10">

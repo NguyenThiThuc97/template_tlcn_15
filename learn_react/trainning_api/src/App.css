@@ -36,7 +36,226 @@
 .mr-10 {
   margin-right: 10px;
 }
+.pdt-45 {
+  padding-top: 45px;
+}
+.pdt-20 {
+  padding-top: 20px;
+}
 .navbar-header{
   margin-left:5px;
   width:100%;
+}
+/* Remove the navbar's default margin-bottom and rounded borders */ 
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+footer {
+  background-color: #f2f2f2;
+  padding: 25px;
+}
+
+.carousel-inner img {
+  width: 100%; /* Set width to 100% */
+  margin: auto;
+  min-height:200px;
+}
+
+/* Hide the carousel text when the screen is less than 600 pixels wide */
+@media (max-width: 600px) {
+.carousel-caption {
+  display: none; 
+  }
+}
+.sitemenu {
+  width: 100%;
+  background: #a2cea5;
+  font-family: 'Droid Sans', serif;
+  border-top: 8px solid #126758;
+}
+.sitemenu > .navwrapper {
+  display: table;
+  margin: 0 auto;
+}
+ul.navbar-nav.hihi{
+  display : inline-block;
+  float:none;
+  text-align: center;
+  vertical-align: top;
+}
+.navbar-nav.hihi ul li a:hover{
+  color: #fff;
+  background: #939393;
+}
+/* Footer */
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+section {
+    padding: 60px 0;
+}
+
+section .section-title {
+    text-align: center;
+    color:black;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+#footer {
+    background: #228d7f !important;
+    /* background-image: url(https://devitems.com/html/shofixe-preview/shofixe/img/banner/2.jpg) */
+}
+#footer h5{
+	padding-left: 10px;
+    border-left: 3px solid #eeeeee;
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+    color:#ffffff;
+}
+#footer a {
+    color: #ffffff;
+    text-decoration: none !important;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+#footer ul.social li{
+	padding: 3px 0;
+}
+#footer ul.social li a i {
+    margin-right: 5px;
+	font-size:25px;
+	-webkit-transition: .5s all ease;
+	-moz-transition: .5s all ease;
+	transition: .5s all ease;
+}
+#footer ul.social li:hover a i {
+	font-size:30px;
+	margin-top:-10px;
+}
+#footer ul.social li a,
+#footer ul.quick-links li a{
+	color:#282c34;
+}
+#footer ul.social li a:hover{
+	color:#eeeeee;
+}
+#footer ul.quick-links li{
+	padding: 3px 0;
+	-webkit-transition: .5s all ease;
+	-moz-transition: .5s all ease;
+	transition: .5s all ease;
+}
+#footer ul.quick-links li:hover{
+	padding: 3px 0;
+	margin-left:5px;
+	font-weight:700;
+}
+#footer ul.quick-links li a i{
+	margin-right: 5px;
+}
+#footer ul.quick-links li:hover a i {
+    font-weight: 700;
+}
+
+@media (max-width:767px){
+	#footer h5 {
+    padding-left: 0;
+    border-left: transparent;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+  }
+}
+/* image hover */
+.imagecc {
+  opacity: 1;
+  display: block;
+  
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align:center;
+}
+.image {
+  height: 300px;
+  width: 230px;
+}
+.imagecc:hover .image {
+  opacity: 0.2;
+}
+
+.imagecc:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  /* background-color: #4CAF50; */
+  color:black;
+  font-size: 16px;
+  /* padding: 16px 32px; */
+}
+
+/* slide product */
+.col-md-3{
+  display: inline-block;
+  margin-left:-4px;
+}
+.col-md-3 img{
+  width:100%;
+  height:auto;
+}
+body .carousel-indicators li{
+  background-color:red;
+}
+body .carousel-indicators{
+  bottom: 0;
+}
+body .carousel-control-prev-icon,
+body .carousel-control-next-icon{
+  background-color:red;
+}
+body .no-padding{
+  padding-left: 0;
+  padding-right: 0;
+   }
+
+.navtop{
+  margin-top:50px;
+  display: inline-block;
+  float: none;
+}
+.tab-content {
+    padding: 40px;
+}
+.nav-tabs .nav-item {
+  transform: skew(-10deg);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, .2);
+}
+.nav-tabs .nav-item .nav-link{
+  width: 200px;
+  background-color: #282c34
+}
+
+li.nav-item:first-child::before {
+  content: '';
+  height: 40px;
+  background: #fff;
+  width: 20px;
+  position: absolute;
+  transform: skew(22.5deg);
+  top: 1px;
+  left: -8px;
+}
+
+.nav-tabs .nav-item a span {
+  transform: skew(22.5deg);
+  display: inline-block;
 }

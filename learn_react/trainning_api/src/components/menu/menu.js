@@ -22,6 +22,11 @@ const menus = [
     name : "Manage Customer",
     to : "/customer-list",
     exact : false
+  },
+  {
+    name : "Manage Category",
+    to : "/category-list",
+    exact : false
   }
 ]
 
