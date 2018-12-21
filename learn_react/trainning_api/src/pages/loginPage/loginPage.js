@@ -33,7 +33,7 @@ class LoginPage extends Component {
                     username : username,
                     password : password
                 }))
-                history.push("/")
+                history.push("/admin")
             }
             else {
                 alert(res.data.result.message)
@@ -48,7 +48,7 @@ class LoginPage extends Component {
 
         if(loggedInUser !== null)
         {
-            return <Redirect to = "/"/>
+            return <Redirect to = "/admin"/>
         }
         return (
             <form onSubmit = { this.onLogin }>

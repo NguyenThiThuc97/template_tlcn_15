@@ -25,8 +25,8 @@ ReactDOM.render(
     <Provider store = {store}>
         <Router>
             <Switch>
-                <Route path = "/home" component = {AppClient}/>
-                <Route path = "/" component = {App}/>
+                <Route path = "/admin" component = {App}/>
+                <Route path = "/" component = {AppClient}/>
             </Switch>
         </Router>
     </Provider>,

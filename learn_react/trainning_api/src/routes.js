@@ -25,7 +25,7 @@ import CategoryListPage from './pages/category/categoryListPage/categoryListPage
 
 const routes = [
     {
-        path : "/",
+        path : "/admin",
         exact : true,
         main : () => <HomePage/>
     },

@@ -5,7 +5,7 @@ import 'font-awesome/css/font-awesome.min.css'
 const menus = [
   {
     name : "Home Page",
-    to : '/',
+    to : '/admin',
     exact : true
   },
   {

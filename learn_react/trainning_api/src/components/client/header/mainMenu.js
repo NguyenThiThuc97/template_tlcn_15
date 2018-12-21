@@ -3,21 +3,28 @@ import React, { Component } from 'react';
 class MainMenu extends Component {
     render() {
         return (
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><a href="index.html">New Arrival</a>
-                </li>
-                <li className="shop"><a href="shop-grid-right-sidebar.html">Hot</a>
-                </li>
-                <li className="dropdown"><a href="shop.html">Categories</a>
-                    <ul className="submenu-mainmenu">
-                        <li><a href="cart.html"><i className="fa fa-circle"></i>Dess</a></li>
-                        <li><a href="checkout.html"><i className="fa fa-circle"></i>Coat</a></li>
-                        <li><a href="contact.html"><i className="fa fa-circle"></i>...</a></li>
-                    </ul>
-                </li>
-                <li><Link to="/contact">Contact</Link></li>
-            </ul>
+            <div className = "container">
+                <nav className="navbar navbar-inverse">
+                    <div className="container-fluid">
+                        <div className="collapse navbar-collapse text-center" id="bs-example-navbar-collapse-1">
+                            <ul className="nav navbar-nav hihi">
+                                <li><a href="#">HOME</a></li>
+                                <li><a href="#">NEW ARRIVAL</a></li>
+                                <li><a href="#">HOT</a></li>
+                                <li className="dropdown">
+                                    <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">CATEGORY <span className="caret" /></a>
+                                    <ul className="dropdown-menu">
+                                        <li><a href="#">item 1</a></li>
+                                        <li><a href="#">item 2</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">CONTACT</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+                
         );
     }
 }
