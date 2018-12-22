@@ -7,12 +7,13 @@ class CompanyActionPage extends Component {
         super(props)
         this.state = {
             id : "",
-            txtName: "",
-            txtMail : "",
-            txtAddress: "",
-            txtFanpage : "",
-            txtPhone : "",
-            txtWebsite : ""
+            username: "",
+            fullname : "",
+            phone: "",
+            mail : "",
+            address : "",
+            department : "",
+            image : null
         }
     }
 
@@ -20,16 +21,17 @@ class CompanyActionPage extends Component {
         var {match} = this.props
         if(match){
             var id = match.params.id
-            callAPI(`company/${id}`, "GET", null).then(res => {
-                var company = res.data
+            callAPI(`employee/${id}`, "GET", null).then(res => {
+                var employee = res.data
                 this.setState({
-                    id : company.id,
-                    txtAddress : company.address,
-                    txtFanpage : company.fanpage,
-                    txtMail : company.mail,
-                    txtName : company.name,
-                    txtPhone : company.phone,
-                    txtWebsite : company.website
+                    id : employee.id,
+                    username : employee.username,
+                    fullname : employee.fullname,
+                    phone : employee.phone,
+                    mail : employee.mail,
+                    address : employee.address,
+                    department : employee.department,
+                    image: employee.image
                 })
             })
         }
@@ -38,7 +40,8 @@ class CompanyActionPage extends Component {
     onChange = (e) => {
         var target = e.target
         var name = target.name
-        var value = target.value
+        
+        var value = target.type === 'file' ? target.files[0] : target.value
         this.setState({
             [name] : value
         })

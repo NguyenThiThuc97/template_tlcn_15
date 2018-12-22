@@ -84,7 +84,7 @@ class ProductDetailActionPage extends Component {
         e.preventDefault()
         callAPI("product_detail/create", "POST", dataProductDetail).then(res => {
             console.log(res)
-            history.goBack()
+            history.push(`/product/edit/${product_id}`)
         })
     }
 

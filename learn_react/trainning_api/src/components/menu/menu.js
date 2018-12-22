@@ -19,6 +19,11 @@ const menus = [
     exact : false
   },
   {
+    name : "Manage Employee",
+    to : "/employee-list",
+    exact : false
+  },
+  {
     name : "Manage Customer",
     to : "/customer-list",
     exact : false

@@ -12,15 +12,18 @@ class EmployeeListPage extends Component {
         super(props)
         this.state = {
             employees : [],
-            isLoad : false
+            isLoad : false,
+            loggedInUser: ""
         }
     }
 
     componentDidMount(){
-        callAPI("employee", "GET", null).then(res =>{
+        var loggedInUser = JSON.parse(localStorage.getItem('user'))
+        callAPI("employee", "GET", null, null).then(res =>{
             this.setState({
-                employee : res.data,
-                isLoad : true
+                employees : res.data,
+                isLoad : true,
+                loggedInUser : loggedInUser
             })
         })
     }
@@ -56,19 +59,14 @@ class EmployeeListPage extends Component {
 
     render() {
 
-        var loggedInUser = localStorage.getItem("user")
-
-        if(loggedInUser !== null)
+        var { employees, isLoad, loggedInUser } = this.state
+        if(loggedInUser === null)
         {
             return <Redirect to = "/login"/>
         }
 
-
-        var { employees, isLoad } = this.state
-        if( !isLoad ){
-            return <div>Loading...</div>
-        }
-        else{
+        if( isLoad ){
+            
             return (
                 <div className="row">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -80,8 +78,12 @@ class EmployeeListPage extends Component {
                 </div> 
             );
         }
+        else{
+            return <div>Loading...</div>
+        }
     }
-    showEmployee(employees){
+
+    showEmployees(employees){
         var result = null
         if(employees.length > 0)
         {

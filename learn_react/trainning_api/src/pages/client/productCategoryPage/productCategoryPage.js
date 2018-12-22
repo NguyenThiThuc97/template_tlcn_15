@@ -14,7 +14,15 @@ class ProductCategoryPage extends Component {
             category : 0
         }
     }
-
+    componentWillReceiveProps(newprops){
+        var category = newprops.match.params.id
+        callAPI(`product_category/${category}`, "GET", null, null).then(res => {
+            this.setState({
+                products : res.data,
+                category : category
+            })
+        })
+    }
     componentDidMount(){
         var category = this.props.match.params.id
         callAPI(`product_category/${category}`, "GET", null, null).then(res => {
@@ -29,6 +37,7 @@ class ProductCategoryPage extends Component {
     render() {
 
         var {isLoad, products, category} = this.state 
+        
         if(isLoad){
             return (
                 <div>

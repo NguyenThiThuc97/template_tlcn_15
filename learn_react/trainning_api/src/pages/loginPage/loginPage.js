@@ -42,7 +42,7 @@ class LoginPage extends Component {
     }
 
     render() {
-        var {  username, password } = this.state
+        var {  username, password, userType } = this.state
         
         var loggedInUser = localStorage.getItem("user")
 
