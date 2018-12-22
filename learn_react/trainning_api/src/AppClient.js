@@ -16,7 +16,6 @@ class AppClient extends Component {
     }
 
     render() {
-        console.log(routesClient)
         return (
             <Router>
                 <div>

@@ -17,7 +17,6 @@ class ProductDetailListPage extends Component {
     }
 
     componentDidMount (){//is called after component render first time
-        
         var id = this.props.data
         // var loggedInUser = JSON.parse(localStorage.getItem('user'))
     

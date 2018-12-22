@@ -5,7 +5,7 @@ class Banner extends Component {
         return (
             <div className = "banner">
                 <img className = "image-banner" src = "https://devitems.com/html/shofixe-preview/shofixe/img/banner/8.jpg"/>
-                <div class="text-block"> 
+                <div className="text-block"> 
                     <h4>Contact Us</h4>
                     <p>Home > Contact</p>
                 </div>
