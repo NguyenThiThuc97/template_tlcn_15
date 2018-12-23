@@ -14,6 +14,9 @@ class HomePage extends Component {
         }
     }
 
+    componentWillReceiveProps(newprops){
+        console.log(newprops)
+    }
     componentDidMount () {
         callAPI(`product_age_type/Man`, "GET", null, null).then(ManProduct => {
             callAPI(`product_age_type/Woman`, "GET", null, null).then(WomanProduct => {
@@ -330,6 +333,7 @@ class HomePage extends Component {
             result = products.map((product, index) => {
                 return (
                     <ProductItem
+                        path = "/"
                         key = {index}
                         product = {product}
                         index = {index}

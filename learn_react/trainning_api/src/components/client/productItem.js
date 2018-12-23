@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import Size from '../../components/size/size'
 import Color from '../../components/color/color'
+import {Redirect} from 'react-router-dom'
+import callAPI from '../../utils/apiCaller';
 
 class ProductItem extends Component {
     constructor(props){
         super (props)
         this.state = {
             size : "",
-            color : 0
+            color : 0,
+            product_id : this.props.product.id
         }
     }
 
@@ -16,17 +19,41 @@ class ProductItem extends Component {
     }
 
     addToCart = () =>{
-        var {size, color} = this.state
-        var productDetail = {
-            product_id : this.props.product.id,
-            size : size,
-            color : color
-        }
-        var cart = JSON.parse(localStorage.getItem("cart") || "[]");
-        cart.push(productDetail)
-        localStorage.setItem("cart", JSON.stringify(cart));
-        console.log(this.props)
-        document.getElementById("hideProductDetail").click();
+        var {size, color, quantity, product_id} = this.state
+
+        callAPI(`product_detail/view/${product_id}/${size}/${color}`, "GET", null, null).then(res => {
+            
+            if(res.data.price){
+                var productDetail = {
+                    product_id : product_id,
+                    size : size,
+                    color : color,
+                    quantity :quantity,
+                    price : res.data.price
+                }
+                var cart = JSON.parse(localStorage.getItem("cart") || "[]");
+                cart.push(productDetail)
+                localStorage.setItem("cart", JSON.stringify(cart));
+            }
+            else {
+                alert("product not existed")
+            }
+            // console.log(this.props)
+            
+            document.getElementById(`hideProductDetail`+product_id).click();
+            var path = this.props.path
+            
+            if(path === "/"){
+                return <Redirect to = "/contact"/>
+            }
+            else {
+                return <Redirect to = {`${path}${this.props.product.id}`}/>
+            }
+            
+            // console.log(`category/${this.props.product.id}`)
+            // return <Redirect to = {`/category/${this.props.product.id}`}/>
+        })
+        
     }
 
     onChange = (e) => {
@@ -39,14 +66,15 @@ class ProductItem extends Component {
     }
     render() {
         var {product, index} = this.props;
-        var {size, color} = this.state
+        var {size, color, product_id, quantity} = this.state
+        console.log(this.state)
         return (
             <div>
                 <div className="col-sm-4 "> 
                     <div className="imagecc">
                         <img src="https://www.jollyhers.com/media/catalog/product/f3/b1/1.jpg" className="img-fluid image" alt="smaple image"/>
                         <div className="middle">
-                            <div className="text"><button className = "btn btn-default" data-toggle="modal" data-target="#product"><i className = "fa fa-shopping-cart"></i> Add To Cart</button></div>
+                            <div className="text"><button className = "btn btn-default" data-toggle="modal" data-target={`#product`+product_id}><i className = "fa fa-shopping-cart"></i> Add To Cart</button></div>
                         </div>
                         <div className = "title pdt-20">
                             <b>{product.name}</b>
@@ -54,7 +82,7 @@ class ProductItem extends Component {
                     </div>   
                 </div>
                 {/* Modal */}
-                <div className="modal fade" id="product" role="dialog">
+                <div className="modal fade" id={`product`+product_id} role="dialog">
                     <div className="modal-dialog">
                     {/* Modal content*/}
                     <div className="modal-content">
@@ -83,6 +111,7 @@ class ProductItem extends Component {
                                                     type="number" 
                                                     className="form-control" 
                                                     name = "quantity" 
+                                                    onChange = {this.onChange}
                                                 />
                                             </div>
                                         </td>
@@ -94,7 +123,7 @@ class ProductItem extends Component {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-success" onClick = {this.addToCart}>Add To Cart</button>
-                            <button type="button" className="btn btn-danger" data-dismiss="modal" id = "hideProductDetail">Close</button>
+                            <button type="button" className="btn btn-danger" data-dismiss="modal" id = {`hideProductDetail`+product_id}>Close</button>
                         </div>
                     </div>
                     </div>

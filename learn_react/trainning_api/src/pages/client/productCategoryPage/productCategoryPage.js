@@ -66,6 +66,7 @@ class ProductCategoryPage extends Component {
             result = products.map((product, index) => {
                 return (
                 <ProductItem
+                    path = "/category/"
                     key = {index}
                     product = {product}
                     index = {index}

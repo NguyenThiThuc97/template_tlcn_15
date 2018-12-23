@@ -15,9 +15,6 @@ class TopMenu extends Component {
         }
     }
 
-    componentWillReceiveProps(newprops){
-console.log(newprops)
-    }
     onChange = (e) => {
         var target = e.target
         var name = target.name
@@ -101,7 +98,7 @@ console.log(newprops)
                                     <li role="separator" className="divider" />
                                     <li><a href="#">Sub Total : 100$</a></li>
                                     <li role="separator" className="divider" />
-                                    <li><a href="#">View Cart</a></li>
+                                    <li><Route><Link to = "/cart">View Cart</Link></Route></li>
                                     <li><a href="#">Checkout</a></li>
                                 </ul>
                             </li>
