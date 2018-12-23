@@ -36,13 +36,13 @@ class Department extends Component {
             return <div><h5>Loading...</h5></div>
         }
     }
-    showDepartment(colors){
+    showDepartment(departments){
         var result = null
-        if(colors.length > 0)
+        if(departments.length > 0)
         {
-            result = colors.map((color, index) => {
+            result = departments.map((department, index) => {
                 
-                return <option value = {color.id} key = {index}>{color.name}</option>
+                return <option value = {department.id} key = {index}>{department.name}</option>
             })
         }
         return result;

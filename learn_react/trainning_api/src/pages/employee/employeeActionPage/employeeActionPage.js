@@ -27,15 +27,15 @@ class CompanyActionPage extends Component {
             callAPI(`employee/${id}`, "GET", null).then(res => {
                 var employee = res.data
                 this.setState({
-                    id : employee.id,
-                    username : employee.username,
-                    fullname : employee.fullname,
-                    phone : employee.phone,
-                    mail : employee.mail,
-                    address : employee.address,
-                    department : employee.department,
-                    image: employee.image,
-                    password : employee.password
+                    id : employee[0].id,
+                    username : employee[0].username,
+                    fullname : employee[0].fullname,
+                    phone : employee[0].phone,
+                    mail : employee[0].mail,
+                    address : employee[0].address,
+                    department : employee[0].department,
+                    image: employee[0].image,
+                    password : employee[0].password
                 })
             })
         }
@@ -111,6 +111,7 @@ class CompanyActionPage extends Component {
 
     render() {
         var { username, fullname, phone, mail, address, department, password, image } = this.state
+        
         return (
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <form onSubmit = {this.onSave}>
@@ -130,7 +131,7 @@ class CompanyActionPage extends Component {
                         className = "form-control" 
                         name = "fullname" 
                         onChange = { this.onChange }
-                        value = { fullname } />
+                        value = { fullname ? fullname : "" } />
                 </div>
                 <div className="form-group">
                     <label> Mail</label>
@@ -139,7 +140,7 @@ class CompanyActionPage extends Component {
                         className="form-control" 
                         name = "mail"
                         onChange = { this.onChange }
-                        value = { mail }
+                        value = { mail ? mail : ""}
                         />
                 </div>
                 <div className="form-group">
@@ -169,7 +170,7 @@ class CompanyActionPage extends Component {
                         className="form-control" 
                         name = "address" 
                         onChange = { this.onChange } 
-                        value = { address }
+                        value = { address ? address : ""}
                     />
                 </div>
                 <div className="form-group">

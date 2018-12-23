@@ -208,6 +208,9 @@ section .section-title {
   height: auto;
   opacity:0.7;
 }
+.image-product-detail {
+  width: 500px;
+}
 .banner {
   position: relative;
 }

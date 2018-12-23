@@ -24,16 +24,21 @@ class LoginPage extends Component {
 
     onLogin = (e) => {
         e.preventDefault();
-        var { userType, username, password } = this.state
+        var { userType, username } = this.state
         var {history} = this.props
         callAPI("login", "POST", this.state).then(res => {
             if(res.data.statusLogin){
                 localStorage.setItem("user", JSON.stringify({
                     userType : userType,
                     username : username,
-                    password : password
                 }))
-                history.push("/admin")
+                if(userType == "employee"){
+                    history.push("/admin")
+                }
+                else {
+                    alert("user is not logined in this site!!!")
+                    localStorage.removeItem("user")
+                }
             }
             else {
                 alert(res.data.result.message)
@@ -48,7 +53,8 @@ class LoginPage extends Component {
 
         if(loggedInUser !== null)
         {
-            return <Redirect to = "/admin"/>
+            if(userType === "employee")
+                return <Redirect to = "/"/>
         }
         return (
             <form onSubmit = { this.onLogin }>
