@@ -27,7 +27,7 @@ class Department extends Component {
             return (
                 <FormGroup>
                     <Input type="select" name="department" id="exampleSelect" value = {this.props.value} onChange = {this.props.onChange}>
-                        {this.showColor(departments)}
+                        {this.showDepartment(departments)}
                     </Input>
                 </FormGroup>
             );
@@ -35,6 +35,17 @@ class Department extends Component {
         else{
             return <div><h5>Loading...</h5></div>
         }
+    }
+    showDepartment(colors){
+        var result = null
+        if(colors.length > 0)
+        {
+            result = colors.map((color, index) => {
+                
+                return <option value = {color.id} key = {index}>{color.name}</option>
+            })
+        }
+        return result;
     }
 }
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import callAPI from '../../../utils/apiCaller';
+import callAPI, { callImage } from '../../../utils/apiCaller';
 import {Link} from 'react-router-dom'
+import Department from '../../../components/department/department'
+
 class CompanyActionPage extends Component {
 
     constructor(props){
@@ -13,7 +15,8 @@ class CompanyActionPage extends Component {
             mail : "",
             address : "",
             department : "",
-            image : null
+            image : null,
+            password : ""
         }
     }
 
@@ -31,7 +34,8 @@ class CompanyActionPage extends Component {
                     mail : employee.mail,
                     address : employee.address,
                     department : employee.department,
-                    image: employee.image
+                    image: employee.image,
+                    password : employee.password
                 })
             })
         }
@@ -48,83 +52,94 @@ class CompanyActionPage extends Component {
     }
 
     onSave = (e) => {
-        var { id, txtAddress, txtFanpage, txtMail, txtName, txtPhone, txtWebsite} = this.state
+        var { id, username, fullname, phone, mail, address, image, department, password } = this.state
         var {history} = this.props
-
+        
         e.preventDefault()//not submit page
         if(id)
         {
-            callAPI("company/update", "POST", {
-                id : id,
-                name : txtName,
-                address : txtAddress,
-                fanpage : txtFanpage,
-                mail : txtMail,
-                phone : txtPhone,
-                website : txtWebsite
-            }).then(res => {
-                history.goBack()
-            })
+            if( image.length == null){//want to update image //undefined
+                
+                const data = new FormData();
+                data.append('id', id)
+                data.append('image', image);
+                data.append('username', username);
+                data.append('fullname', fullname);
+                data.append('phone', phone);
+                data.append('mail', mail);
+                data.append('address', address);
+                data.append('department', department);
+                callAPI("employee/update", "POST", data).then(res => {
+                    history.push("/employee-list")
+                })
+            }
+            else{
+                
+                callAPI("employee/update", "POST", {
+                    id : id,
+                    username : username,
+                    fullname : fullname,
+                    phone : phone,
+                    mail : mail,
+                    address : address,
+                    department : department,
+                    password : password
+                }).then(res => {
+                    history.push("/employee-list")
+                })
+            }
+            
         }
         else
         {
-            callAPI("company/create", "POST", {
-                name : txtName,
-                address : txtAddress,
-                fanpage : txtFanpage,
-                mail : txtMail,
-                phone : txtPhone,
-                website : txtWebsite
-            }).then(res => {
-                history.goBack()
-                // history.push("")
+            console.log("zo day roi")
+            const data = new FormData();
+            data.append('image', image);
+            data.append('username', username);
+            data.append('fullname', fullname);
+            data.append('phone', phone);
+            data.append('mail', mail);
+            data.append('address', address);
+            data.append('department', department);
+            data.append('password', password);
+            callAPI("employee/create", "POST", data, true).then(res => {
+                // history.goBack()
+                history.push("/employee-list")
             })
-        }
-        
+        } 
     }
 
     render() {
-        var { txtName, txtAddress, txtFanpage, txtMail, txtPhone, txtWebsite } = this.state
+        var { username, fullname, phone, mail, address, department, password, image } = this.state
         return (
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <form onSubmit = {this.onSave}>
                 <div className="form-group">
-                    <label> Name</label>
+                    <label> Username</label>
                     <input 
                         type = "text" 
                         className = "form-control" 
-                        name = "txtName" 
+                        name = "username" 
                         onChange = { this.onChange }
-                        value = {txtName} />
+                        value = { username } />
+                </div>
+                <div className="form-group">
+                    <label> Full Name</label>
+                    <input 
+                        type = "text" 
+                        className = "form-control" 
+                        name = "fullname" 
+                        onChange = { this.onChange }
+                        value = { fullname } />
                 </div>
                 <div className="form-group">
                     <label> Mail</label>
                     <input 
                         type="text" 
                         className="form-control" 
-                        name = "txtMail"
+                        name = "mail"
                         onChange = { this.onChange }
-                        value = {txtMail}
-                        />
-                </div>
-                <div className="form-group">
-                    <label> Website</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        name = "txtWebsite" 
-                        onChange = { this.onChange }
-                        value = {txtWebsite}
-                        />
-                </div>
-                <div className="form-group">
-                    <label> Fanpage</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        name = "txtFanpage" 
-                        onChange = { this.onChange }
-                        value = {txtFanpage}
+                        value = { mail }
                         />
                 </div>
                 <div className="form-group">
@@ -132,9 +147,19 @@ class CompanyActionPage extends Component {
                     <input 
                         type="text" 
                         className="form-control" 
-                        name = "txtPhone" 
+                        name = "phone" 
                         onChange = { this.onChange }
-                        value = {txtPhone}
+                        value = { !!(phone) ? phone: "" }
+                    />
+                </div>
+                <div className="form-group">
+                    <label> Password</label>
+                    <input 
+                        type="text" 
+                        className="form-control" 
+                        name = "password" 
+                        onChange = { this.onChange }
+                        value = { password }
                     />
                 </div>
                 <div className="form-group">
@@ -142,13 +167,27 @@ class CompanyActionPage extends Component {
                     <input 
                         type="text" 
                         className="form-control" 
-                        name = "txtAddress" 
+                        name = "address" 
                         onChange = { this.onChange } 
-                        value = {txtAddress}
-                        />
+                        value = { address }
+                    />
+                </div>
+                <div className="form-group">
+                    <label> Department</label>
+                    <Department  value = {department} onChange = { this.onChange }/>
+                </div>
+                <div className="form-group">
+                    <label> Image</label>
+                    <input 
+                        type="file" 
+                        className="form-control" 
+                        name = "image" 
+                        onChange = { this.onChange }
+                    />
+                    <img src={callImage("GET", "employee", image)} className="img-responsive" alt="Customer Image Profile"></img>
                 </div>
                 <button type="submit" className="btn btn-primary mr-10">Save</button>
-                <Link to = "/company-list" className = "btn btn-danger "> Back to list</Link>
+                <Link to = "/employee-list" className = "btn btn-danger "> Back to list</Link>
                 </form>
             </div>    
         );
