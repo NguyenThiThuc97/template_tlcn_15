@@ -24,17 +24,23 @@ class CartPage extends Component {
 
     render() {
         var product_carts = JSON.parse(localStorage.getItem('cart'))
-        
+        window.addEventListener('cart',e => console.log(e))
+        window.removeEventListener("cart", e => console.log(e))
         return (
             <div>
                 <CartBanner/>
                 <div className = "container pdt-45">
-                    <CartList>
-                        {this.showProductCarts(product_carts)}
-                    </CartList>
-                    <h4>Total : {this.summaryOrders(product_carts)}</h4>
+                {product_carts ? 
+                    <div>
+                        <CartList>
+                            {this.showProductCarts(product_carts)}
+                        </CartList>
+                        <h4>Total : {this.summaryOrders(product_carts)}</h4>
+                        <button className = "btn btn-success">Orders</button>
+                    </div>:
+                    <h5>No product</h5>
+                }
                 </div>
-                
             </div>
         );
     }

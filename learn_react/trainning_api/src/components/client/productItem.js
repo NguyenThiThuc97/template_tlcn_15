@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Size from '../../components/size/size'
 import Color from '../../components/color/color'
 import {Redirect} from 'react-router-dom'
-import callAPI from '../../utils/apiCaller';
+import callAPI, { callImage } from '../../utils/apiCaller';
 
 class ProductItem extends Component {
     constructor(props){
@@ -67,12 +67,16 @@ class ProductItem extends Component {
     render() {
         var {product, index} = this.props;
         var {size, color, product_id, quantity} = this.state
-        console.log(this.state)
+        console.log(product.image)
+        // console.log(this.state)
         return (
             <div>
                 <div className="col-sm-4 "> 
                     <div className="imagecc">
-                        <img src="https://www.jollyhers.com/media/catalog/product/f3/b1/1.jpg" className="img-fluid image" alt="smaple image"/>
+                    {product.image ? 
+                        <img src={callImage("GET", "product", product.image)} className="img-fluid image" alt="smaple image"/>:
+                        <img src="http://baomoiso.net/wp-content/themes/news/images/no-hinh.jpg" className="img-fluid image" alt="smaple image"/>
+                        }
                         <div className="middle">
                             <div className="text"><button className = "btn btn-default" data-toggle="modal" data-target={`#product`+product_id}><i className = "fa fa-shopping-cart"></i> Add To Cart</button></div>
                         </div>
@@ -92,8 +96,10 @@ class ProductItem extends Component {
                         </div>
                         <div className="modal-body">
                         <div className = "row">
-                            <img src="https://www.jollyhers.com/media/catalog/product/f3/b1/1.jpg" className="img-fluid image-product-detail" alt="smaple image"/>
-                            <table className="table table-bordered table-hover">
+                        {product.image ? 
+                        <img src={callImage("GET", "product", product.image)} className="img-fluid image" alt="smaple image"/>:
+                        <img src="http://baomoiso.net/wp-content/themes/news/images/no-hinh.jpg" className="img-fluid image" alt="smaple image"/>
+                        }<table className="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>Size</th>

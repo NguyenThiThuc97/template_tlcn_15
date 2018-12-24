@@ -153,7 +153,7 @@ class CompanyActionPage extends Component {
                         value = { !!(phone) ? phone: "" }
                     />
                 </div>
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label> Password</label>
                     <input 
                         type="text" 
@@ -162,7 +162,7 @@ class CompanyActionPage extends Component {
                         onChange = { this.onChange }
                         value = { password }
                     />
-                </div>
+                </div> */}
                 <div className="form-group">
                     <label> Address</label>
                     <input 

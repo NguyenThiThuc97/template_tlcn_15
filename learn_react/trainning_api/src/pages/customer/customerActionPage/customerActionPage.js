@@ -69,7 +69,7 @@ class CustomerActionPage extends Component {
                 data.append('mail', txtMail);
                 data.append('phone', txtPhone);
                 callAPI("customer/update", "POST", data).then(res => {
-                    history.goBack()
+                    history.push("/customer-list")
                 })
             }
             else{
@@ -82,7 +82,7 @@ class CustomerActionPage extends Component {
                     mail : txtMail,
                     phone : txtPhone
                 }).then(res => {
-                    history.goBack()
+                    history.push("/customer-list")
                 })
             }
             
@@ -98,7 +98,7 @@ class CustomerActionPage extends Component {
             data.append('password', txtPassword);
             data.append('phone', txtPhone);
             callAPI("customer/create", "POST", data, true).then(res => {
-                history.goBack()
+                history.push("/customer-list")
                 // history.push("")
             })
         } 
@@ -148,7 +148,7 @@ class CustomerActionPage extends Component {
                         value = { !!(txtPhone) ? txtPhone: "" }
                     />
                 </div>
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label> Password</label>
                     <input 
                         type="text" 
@@ -157,7 +157,7 @@ class CustomerActionPage extends Component {
                         onChange = { this.onChange }
                         value = { txtPassword }
                     />
-                </div>
+                </div> */}
                 <div className="form-group">
                     <label> Address</label>
                     <input 
@@ -176,7 +176,7 @@ class CustomerActionPage extends Component {
                         name = "imgImage" 
                         onChange = { this.onChange }
                     />
-                    <img src={callImage("GET", "customer", imgImage)} className="img-responsive" alt="Customer Image Profile"></img>
+                    <img src={callImage("GET", "customer", imgImage)} className="img-responsive image" alt="Customer Image Profile"></img>
                 </div>
                 <button type="submit" className="btn btn-primary mr-10">Save</button>
                 <Link to = "/customer-list" className = "btn btn-danger "> Back to list</Link>

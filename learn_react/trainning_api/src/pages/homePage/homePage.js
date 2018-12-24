@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 class HomePage extends Component {
   render() {
     return (
-        <div className = "container">
-            <h1>Home Page</h1>
-        </div>
+              <img className = "img-fluid image-home-admin pdt-45" src = "http://goodsamaritanfs.com/wp-content/uploads/2014/03/Admin.-Staff.png"/>
+            
     );
   }
 }

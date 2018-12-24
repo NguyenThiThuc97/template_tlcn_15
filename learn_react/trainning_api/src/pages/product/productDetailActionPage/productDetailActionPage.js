@@ -93,7 +93,7 @@ class ProductDetailActionPage extends Component {
         if(isLoad){
             // console.log(this.state)
             return (
-                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div className="container">
                     <Form onSubmit = {this.onSave}>
                     <div className="form-group">
                         <label> Size</label>

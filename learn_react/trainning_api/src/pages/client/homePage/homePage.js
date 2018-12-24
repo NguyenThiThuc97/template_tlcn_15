@@ -18,8 +18,8 @@ class HomePage extends Component {
         console.log(newprops)
     }
     componentDidMount () {
-        callAPI(`product_age_type/Man`, "GET", null, null).then(ManProduct => {
-            callAPI(`product_age_type/Woman`, "GET", null, null).then(WomanProduct => {
+        callAPI(`product_age_type_home/Man`, "GET", null, null).then(ManProduct => {
+            callAPI(`product_age_type_home/Woman`, "GET", null, null).then(WomanProduct => {
                 this.setState({
                     isLoad : true,
                     productMan : ManProduct.data,
@@ -331,6 +331,8 @@ class HomePage extends Component {
         if( products.length > 0)
         {
             result = products.map((product, index) => {
+                if(product === null)
+                    return;
                 return (
                     <ProductItem
                         path = "/"

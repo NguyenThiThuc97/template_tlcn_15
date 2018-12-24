@@ -111,7 +111,10 @@ class ProductActionPage extends Component {
     var { id, productName, alias, category, company, image } = this.state
     
     return(
-      <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+      <div className = "container pdt-45">
+
+      
+      <div className="">
         <form onSubmit = {this.onSave}>
           <div className="form-group">
             <label> Product Name</label>
@@ -140,7 +143,7 @@ class ProductActionPage extends Component {
           <div className="form-group">
             <label> Image</label>
             <input type="file" className="form-control" onChange = {this.onChange} name = "image"/>
-            <img src={callImage("GET", "product", image)} className="img-responsive" alt="Product Image"></img>
+            <img src={callImage("GET", "product", image)} className="img-responsive image" alt="Product Image"></img>
           </div>
           
           <button type="submit" className="btn btn-primary mr-10">Save</button>
@@ -149,7 +152,8 @@ class ProductActionPage extends Component {
           
           {id? <ProductDetailListPage data = {id}/>:""}
         </form>
-      </div>      
+      </div> 
+      </div>     
     )
   }
 }

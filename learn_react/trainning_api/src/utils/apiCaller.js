@@ -19,7 +19,7 @@ export const callAPI = (endPoint, method = "GET", body, uploadFile = false) => {
     }).catch(error => console.log(error));
   }
   else{
-    console.log(endPoint)
+    // console.log(endPoint)
     return axios({
       method: method,
       url: `${Config.API_URL}/${endPoint}`,

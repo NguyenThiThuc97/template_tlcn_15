@@ -208,6 +208,9 @@ section .section-title {
   height: auto;
   opacity:0.7;
 }
+.image-home-admin {
+  width:  100%
+}
 .image-product-detail {
   width: 500px;
 }
