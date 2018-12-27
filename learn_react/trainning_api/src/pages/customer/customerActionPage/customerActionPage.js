@@ -148,7 +148,7 @@ class CustomerActionPage extends Component {
                         value = { !!(txtPhone) ? txtPhone: "" }
                     />
                 </div>
-                {/* <div className="form-group">
+                <div className="form-group">
                     <label> Password</label>
                     <input 
                         type="text" 
@@ -157,7 +157,7 @@ class CustomerActionPage extends Component {
                         onChange = { this.onChange }
                         value = { txtPassword }
                     />
-                </div> */}
+                </div>
                 <div className="form-group">
                     <label> Address</label>
                     <input 

@@ -14,7 +14,7 @@ class ProductListPage extends Component {
     this.state = {
       products : [], 
       isLoad : false,
-      loggedInUser : ""
+      loggedInUser : JSON.parse(localStorage.getItem('user'))
     }
   }
 
@@ -49,14 +49,11 @@ class ProductListPage extends Component {
   
   componentDidMount (){//is called after component render first time
 
-    var loggedInUser = JSON.parse(localStorage.getItem('user'))
-
     callAPI("product", "GET", null).then(res=>
       {
         this.setState({
           products : res.data, 
           isLoad : true,
-          loggedInUser : loggedInUser
         })
       })
   
@@ -70,7 +67,9 @@ class ProductListPage extends Component {
         {
             return <Redirect to = "/login" />
         }
-
+    else if(loggedInUser.userType === "customer"){
+      return <div className = "container"><h2>This site is only for ADMINISTRATIVE STAFF</h2></div>
+    }
     if(!isLoad)
     {
       return <div>loading..</div>

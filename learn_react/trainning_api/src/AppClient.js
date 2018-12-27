@@ -8,6 +8,7 @@ import routesClient from "./routesClient"
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import Header from './components/client/header/header'
 import Footer from "./components/client/footer/footer"
+import {CartProvider} from './components/client/cart/cart'
 
 class AppClient extends Component {
     
@@ -17,18 +18,19 @@ class AppClient extends Component {
 
     render() {
         return (
-            <Router>
-                <div>
-                    {/* header */}
-                    <Header/>
-                    {/* slide */}
-                    {/* product */}
-                    { this.showContentMenus(routesClient) }
-                    {/* footer */}
-                    <Footer/>
-                    
-                </div>
-            </Router>
+            <CartProvider>
+                <Router>
+                    <div>
+                        {/* header */}
+                        <Header/>
+                        {/* slide */}
+                        {/* product */}
+                        { this.showContentMenus(routesClient) }
+                        {/* footer */}
+                        <Footer/>
+                    </div>
+                </Router>
+            </CartProvider>
         );
     }
 

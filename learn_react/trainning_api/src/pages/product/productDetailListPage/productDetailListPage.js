@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import callAPI from '../../../utils/apiCaller';
 import ProductDetailList from '../../../components/product/productDetailList/productDetailList';
 import ProductDetailItem from '../../../components/product/productDetailItem/productDetailItem';
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 
 class ProductDetailListPage extends Component {
 
@@ -11,14 +11,13 @@ class ProductDetailListPage extends Component {
         this.state = {
           productDetails : [], 
           isLoad : false,
-          loggedInUser : "",
+          loggedInUser : JSON.parse(localStorage.getItem('user')),
           product_id : "" 
         }
     }
 
     componentDidMount (){//is called after component render first time
         var id = this.props.data
-        // var loggedInUser = JSON.parse(localStorage.getItem('user'))
     
         callAPI(`product/${id}`, "GET", null, ).then(res=>
           {
@@ -33,8 +32,14 @@ class ProductDetailListPage extends Component {
       }
 
     render() {
-        var { isLoad, products, product_id } = this.state
-        
+        var { isLoad, products, product_id, loggedInUser } = this.state
+        if(loggedInUser === null)
+        {
+            return <Redirect to = "/login"/>
+        }
+        else if(loggedInUser.userType === "customer"){
+            return <div className = "container"><h2>This site is only for ADMINISTRATIVE STAFF</h2></div>
+        }
         var productDetails = products ? products.product : null
         if(isLoad === false){
             return (

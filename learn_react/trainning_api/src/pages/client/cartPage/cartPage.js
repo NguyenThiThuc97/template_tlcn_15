@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import CartBanner from '../../../components/client/cart/cartBanner'
 import CartList from '../../../components/client/cart/cartList'
 import CartItem from '../../../components/client/cart/cartItem'
+import callAPI from '../../../utils/apiCaller';
+import {CartContext} from './../../../components/client/cart/cart'
 
 class CartPage extends Component {
 
@@ -9,9 +11,13 @@ class CartPage extends Component {
     {
         super(props)
         this.state = {
-            product_carts : [],
+            product_carts : JSON.parse(localStorage.getItem('cart')),
             isLoad : false
         }
+    }
+
+    componentWillReceiveProps(newprops){
+        console.log(newprops)
     }
 
     summaryOrders = (productCarts) => {
@@ -19,39 +25,72 @@ class CartPage extends Component {
         for(var val of productCarts){
             result += val.quantity*val.price
         }
-        return result
+        return result.toString()
     }
 
+    // onDelete = (id) => {
+    //     var {product_carts} = this.state
+    //     var index = this.findIndex(product_carts, id)
+    //     if(index !== -1)
+    //     {
+    //         product_carts.splice(index, 1)
+    //         this.setState({
+    //             product_carts : product_carts
+    //         })
+    //         var cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    //         cart.splice(index, 1)
+    //         localStorage.setItem("cart", JSON.stringify(cart));
+    //     }
+    // }
+
+    // findIndex = (product_carts, id) =>{
+    //     var result = -1
+    //     product_carts.forEach((product_cart, index) => {
+    //         if(product_cart.id === id)
+    //         {
+    //             result = index
+    //         }
+    //     });
+
+    //     return result;
+    // }
+
     render() {
-        var product_carts = JSON.parse(localStorage.getItem('cart'))
-        window.addEventListener('cart',e => console.log(e))
-        window.removeEventListener("cart", e => console.log(e))
+        
+        // var {product_carts} = this.state
         return (
             <div>
                 <CartBanner/>
                 <div className = "container pdt-45">
-                {product_carts ? 
-                    <div>
-                        <CartList>
-                            {this.showProductCarts(product_carts)}
-                        </CartList>
-                        <h4>Total : {this.summaryOrders(product_carts)}</h4>
-                        <button className = "btn btn-success">Orders</button>
-                    </div>:
-                    <h5>No product</h5>
-                }
+                
+                    <CartContext.Consumer>
+                        {({cartItems}) => <CartList>{this.showProductCarts({cartItems})}</CartList>}
+                    </CartContext.Consumer>
+                    
+                    <CartContext.Consumer>
+                        {({cartItems}) => <h4>Total : {this.summaryOrders(cartItems)}</h4>}
+                    </CartContext.Consumer>
+
+                    <CartContext.Consumer>
+                        {({orders, cartItems}) => <button className = "btn btn-success" onClick = {() => orders(this.summaryOrders(cartItems))}>Orders</button>}
+                    </CartContext.Consumer>
                 </div>
+                    
+                
             </div>
         );
     }
-    showProductCarts(product_carts){
+    showProductCarts(cartItems){
+        
         var result = null
-        if(product_carts.length > 0)
+        if(cartItems.cartItems.length > 0)
         {
-            result = product_carts.map((product_cart, index) => {
+            
+            result = cartItems.cartItems.map((cartItem, index) => {
+                
                 return <CartItem
                     key = {index}
-                    product_cart = {product_cart}
+                    cartItem = {cartItem}
                     index = {index}
                     // onDelete = {this.onDelete}
                 />

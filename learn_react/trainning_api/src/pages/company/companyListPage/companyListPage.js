@@ -11,17 +11,16 @@ class CompanyListPage extends Component {
         super(props)
         this.state = {
             companies : [],
-            isLoad : false
+            isLoad : false,
+            loggedInUser : JSON.parse(localStorage.getItem('user'))
         }
     }
 
     componentDidMount(){
-        var loggedInUser = JSON.parse(localStorage.getItem('user'))
         callAPI("company", "GET", null).then(res =>{
             this.setState({
                 companies : res.data,
                 isLoad : true,
-                loggedInUser : loggedInUser
             })
         })
     }
@@ -62,7 +61,9 @@ class CompanyListPage extends Component {
         {
             return <Redirect to = "/login" />
         }
-
+        else if(loggedInUser.userType === "customer"){
+            return <div className = "container"><h2>This site is only for ADMINISTRATIVE STAFF</h2></div>
+        }
         if( !isLoad ){
             return <div>Loading...</div>
         }

@@ -3,6 +3,7 @@ import Size from '../../components/size/size'
 import Color from '../../components/color/color'
 import {Redirect} from 'react-router-dom'
 import callAPI, { callImage } from '../../utils/apiCaller';
+import {CartContext} from '../client/cart/cart'
 
 class ProductItem extends Component {
     constructor(props){
@@ -67,11 +68,9 @@ class ProductItem extends Component {
     render() {
         var {product, index} = this.props;
         var {size, color, product_id, quantity} = this.state
-        console.log(product.image)
-        // console.log(this.state)
         return (
             <div>
-                <div className="col-sm-4 "> 
+                <div className="col-sm-4 pdb-45"> 
                     <div className="imagecc">
                     {product.image ? 
                         <img src={callImage("GET", "product", product.image)} className="img-fluid image" alt="smaple image"/>:
@@ -128,7 +127,9 @@ class ProductItem extends Component {
                             
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-success" onClick = {this.addToCart}>Add To Cart</button>
+                        <CartContext.Consumer>
+                            {({addToCart}) => <button type="button" className="btn btn-success" onClick = {() => addToCart(product, this.state)}>Add To Cart</button>}
+                        </CartContext.Consumer>
                             <button type="button" className="btn btn-danger" data-dismiss="modal" id = {`hideProductDetail`+product_id}>Close</button>
                         </div>
                     </div>

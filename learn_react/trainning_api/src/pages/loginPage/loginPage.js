@@ -31,6 +31,7 @@ class LoginPage extends Component {
                 localStorage.setItem("user", JSON.stringify({
                     userType : userType,
                     username : username,
+                    userInfor : res.data.user
                 }))
                 if(userType == "employee"){
                     history.push("/admin")
@@ -54,7 +55,9 @@ class LoginPage extends Component {
         if(loggedInUser !== null)
         {
             if(userType === "employee")
-                return <Redirect to = "/"/>
+                return <Redirect to = "/admin"/>
+            else
+                return <div className = "container"><h2>This site is only for ADMINISTRATIVE STAFF</h2></div>
         }
         return (
             <form onSubmit = { this.onLogin }>

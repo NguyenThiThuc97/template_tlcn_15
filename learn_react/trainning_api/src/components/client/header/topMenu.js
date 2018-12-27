@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Route, Link, Redirect} from 'react-router-dom'
 import callAPI from '../../../utils/apiCaller';
+import {CartContext} from '../cart/cart'
 
 class TopMenu extends Component {
 
@@ -11,7 +12,9 @@ class TopMenu extends Component {
             password : "",
             userType : "customer",
             isLogin : false,
-            cart : []
+            cart : [],
+            old_pwd : "",
+            new_pwd : ""
         }
     }
 
@@ -37,6 +40,7 @@ class TopMenu extends Component {
                     localStorage.setItem("user", JSON.stringify({
                         userType : userType,
                         username : username,
+                        userInfor : res.data.user
                     }))
                     var cart = []
                     localStorage.setItem("cart", JSON.stringify(cart));
@@ -60,13 +64,32 @@ class TopMenu extends Component {
         this.setState ({
             isLogin : false
         })
+        return <Redirect to = "/"/>
+    }
+
+    onChangePwd = (e) => {
+        e.preventDefault()
+        var loggedUser = JSON.parse(localStorage.getItem('user'))
+        var {old_pwd, new_pwd} = this.state
+        var userInforUpdate = {
+            id : loggedUser.userInfor.id,
+            new_pwd : new_pwd,
+            old_pwd : old_pwd
+        }
+        callAPI("customer/update_pwd", "POST", userInforUpdate, null).then(res => {
+            if(res.data.statusUpdatePwd === false){
+                alert(res.data.message)
+            }
+        })
+        document.getElementById("hidePopUpUpdatePwd").click();
     }
 
     render() {
         var {isLogin} = this.state
-        var loggedUser = localStorage.getItem("user")
+        var loggedUser = JSON.parse(localStorage.getItem('user'))
         if(loggedUser !== null){
-        isLogin = true
+            if(loggedUser.userType === "customer")
+                isLogin = true
         }
         return (
             <nav className="navbar navbar-inverse">
@@ -78,11 +101,12 @@ class TopMenu extends Component {
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span className="caret" /></a>
                             { (isLogin === false) ? 
                             <ul className="dropdown-menu">
-                                <li><a href="#"data-toggle="modal" data-target="#myModal">Login</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
                             </ul>:
                             <ul className="dropdown-menu">
-                                <li><a href="#"data-toggle="modal" onClick = {this.logOut}>Logout</a></li>
-                                <li><a href="#">My Profile</a></li>
+                                <li><a href="#" data-toggle="modal" onClick = {this.logOut}><span className="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                                <li><Route><Link to = "/edit-profile"><span className="glyphicon glyphicon-user"></span> My Profile</Link></Route></li>
+                                <li><a href="#" data-toggle="modal" data-target="#modalUpdatePwd">Change Password</a></li>
                             </ul>
                             }
                         </li>
@@ -90,13 +114,14 @@ class TopMenu extends Component {
                         
                         <ul className="nav navbar-nav navbar-right">
                             <li className="dropdown">
-                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-shopping-cart"></span> Cart <span className="caret" /></a>
+                                <CartContext.Consumer>
+                                    {({cartItems}) => <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-shopping-cart"></span> Cart ({cartItems.length})<span className="caret" /></a>}
+                                </CartContext.Consumer>
+                                
                                 <ul className="dropdown-menu">
-                                    <li><a href="#">Product 1</a></li>
-                                    <li><a href="#">Product 2</a></li>
-                                    <li><a href="#">Product 3</a></li>
-                                    <li role="separator" className="divider" />
-                                    <li><a href="#">Sub Total : 100$</a></li>
+                                    {/* <li><a href="#">Product 1</a></li> */}
+                                    {/* <li role="separator" className="divider" /> */}
+                                    {/* <li><a href="#">Sub Total : 100$</a></li> */}
                                     <li role="separator" className="divider" />
                                     <li><Route><Link to = "/cart">View Cart</Link></Route></li>
                                     <li><a href="#">Checkout</a></li>
@@ -105,7 +130,7 @@ class TopMenu extends Component {
                         </ul>
                     </div>
                 </div>
-                {/* Modal */}
+                {/* Modal Login*/}
                 <div className="modal fade" id="myModal" role="dialog">
                     <div className="modal-dialog">
                     {/* Modal content*/}
@@ -117,28 +142,64 @@ class TopMenu extends Component {
                         
                         <form onSubmit = {this.onLogin}>
                             <div className="modal-body">
-                                        <div className = "row pdt-20">
-                                            <div className = "col-sm-3">
-                                                <label> Username : </label>
-                                            </div>
-                                            <div className = "col-sm-5">
-                                                <input type = "text" placeholder = "username" name = "username" className="form-control" onChange = {this.onChange}/>
-                                            </div>
-                                        </div>
-                                        <div className = "row pdt-20">
-                                            <div className = "col-sm-3">
-                                            <label> Password : </label>
-                                            </div>
-                                            <div className = "col-sm-5">
-                                                <input type = "password" placeholder = "password" name = "password" className="form-control"  onChange = {this.onChange}/>
-                                            </div>
-                                            
-                                            
-                                        </div>
+                                <div className = "row pdt-20">
+                                    <div className = "col-sm-3">
+                                        <label> Username : </label>
+                                    </div>
+                                    <div className = "col-sm-5">
+                                        <input type = "text" placeholder = "username" name = "username" className="form-control" onChange = {this.onChange}/>
+                                    </div>
+                                </div>
+                                <div className = "row pdt-20">
+                                    <div className = "col-sm-3">
+                                    <label> Password : </label>
+                                    </div>
+                                    <div className = "col-sm-5">
+                                        <input type = "password" placeholder = "password" name = "password" className="form-control"  onChange = {this.onChange}/>
+                                    </div>
+                                </div>
                             </div>
                             <div className="modal-footer">
                                 <button type="submit" className="btn btn-success">Login</button>
                                 <button type="button" className="btn btn-danger" id="hidePopUpBtn" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                
+                {/* Model Change User Password */}
+                <div className="modal fade" id="modalUpdatePwd" role="dialog">
+                    <div className="modal-dialog">
+                    {/* Modal content*/}
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal">×</button>
+                            <h4 className="modal-title">Change Password Form</h4>
+                        </div>
+                        
+                        <form onSubmit = {this.onChangePwd}>
+                            <div className="modal-body">
+                                <div className = "row pdt-20">
+                                    <div className = "col-sm-3">
+                                        <label> Old Password : </label>
+                                    </div>
+                                    <div className = "col-sm-5">
+                                        <input type = "text" placeholder = "old password" name = "old_pwd" className="form-control" onChange = {this.onChange}/>
+                                    </div>
+                                </div>
+                                <div className = "row pdt-20">
+                                    <div className = "col-sm-3">
+                                    <label> New Password : </label>
+                                    </div>
+                                    <div className = "col-sm-5">
+                                        <input type = "text" placeholder = "new password" name = "new_pwd" className="form-control"  onChange = {this.onChange}/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="submit" className="btn btn-success">Change</button>
+                                <button type="button" className="btn btn-danger" id="hidePopUpUpdatePwd" data-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>

@@ -15,7 +15,7 @@ class HomePage extends Component {
     }
 
     componentWillReceiveProps(newprops){
-        console.log(newprops)
+        // console.log(newprops)
     }
     componentDidMount () {
         callAPI(`product_age_type_home/Man`, "GET", null, null).then(ManProduct => {

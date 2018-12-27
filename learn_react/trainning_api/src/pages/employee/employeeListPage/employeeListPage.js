@@ -13,17 +13,15 @@ class EmployeeListPage extends Component {
         this.state = {
             employees : [],
             isLoad : false,
-            loggedInUser: ""
+            loggedInUser: JSON.parse(localStorage.getItem('user'))
         }
     }
 
     componentDidMount(){
-        var loggedInUser = JSON.parse(localStorage.getItem('user'))
         callAPI("employee", "GET", null, null).then(res =>{
             this.setState({
                 employees : res.data,
                 isLoad : true,
-                loggedInUser : loggedInUser
             })
         })
     }
@@ -64,7 +62,9 @@ class EmployeeListPage extends Component {
         {
             return <Redirect to = "/login"/>
         }
-
+        else if(loggedInUser.userType === "customer"){
+            return <div className = "container"><h2>This site is only for ADMINISTRATIVE STAFF</h2></div>
+        }
         if( isLoad ){
             
             return (

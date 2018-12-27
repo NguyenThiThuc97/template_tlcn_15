@@ -112,47 +112,45 @@ class ProductActionPage extends Component {
     
     return(
       <div className = "container pdt-45">
-
-      
-      <div className="">
-        <form onSubmit = {this.onSave}>
-          <div className="form-group">
-            <label> Product Name</label>
-            <input 
-                  type="text"
-                  name = "productName" 
-                  className="form-control"
-                  onChange = {this.onChange}
-                  value  = {productName}
-                  />
-          </div>
-          <div className="form-group">
-            <label> Alias</label>
-            <input type="text" className="form-control" onChange = {this.onChange} value = { alias } name = "alias"/>
-          </div>
-          <div className="form-group">
-            <label> Category Name</label>
-            <Category  value = {category} onChange = { this.onChange }/>
-            {/* <input type="text" className="form-control" onChange = {this.onChange} value = { categoryName } name = "category"/> */}
-          </div>
-          <div className="form-group">
-            <label> Company Name</label>
-            <Company  value = {company} onChange = { this.onChange }/>
-            {/* <input type="text" className="form-control" onChange = {this.onChange} value = { companyName }/> */}
-          </div>
-          <div className="form-group">
-            <label> Image</label>
-            <input type="file" className="form-control" onChange = {this.onChange} name = "image"/>
-            <img src={callImage("GET", "product", image)} className="img-responsive image" alt="Product Image"></img>
-          </div>
-          
-          <button type="submit" className="btn btn-primary mr-10">Save</button>
-          <Link to = "/product-list" className = "btn btn-danger "> Back to list</Link>
-          <br/><br/><br/>
-          
-          {id? <ProductDetailListPage data = {id}/>:""}
-        </form>
-      </div> 
+        <div className="">
+          <form onSubmit = {this.onSave}>
+            <div className="form-group">
+              <label> Product Name</label>
+              <input 
+                    type="text"
+                    name = "productName" 
+                    className="form-control"
+                    onChange = {this.onChange}
+                    value  = {productName}
+                    />
+            </div>
+            <div className="form-group">
+              <label> Alias</label>
+              <input type="text" className="form-control" onChange = {this.onChange} value = { alias } name = "alias"/>
+            </div>
+            <div className="form-group">
+              <label> Category Name</label>
+              <Category  value = {category} onChange = { this.onChange }/>
+              {/* <input type="text" className="form-control" onChange = {this.onChange} value = { categoryName } name = "category"/> */}
+            </div>
+            <div className="form-group">
+              <label> Company Name</label>
+              <Company  value = {company} onChange = { this.onChange }/>
+              {/* <input type="text" className="form-control" onChange = {this.onChange} value = { companyName }/> */}
+            </div>
+            <div className="form-group">
+              <label> Image</label>
+              <input type="file" className="form-control" onChange = {this.onChange} name = "image"/>
+              <img src={callImage("GET", "product", image)} className="img-responsive image" alt="Product Image"></img>
+            </div>
+            
+            <button type="submit" className="btn btn-primary mr-10">Save</button>
+            <Link to = "/product-list" className = "btn btn-danger "> Back to list</Link>
+            <br/><br/><br/>
+            
+            {id? <ProductDetailListPage data = {id}/>:""}
+          </form>
+        </div> 
       </div>     
     )
   }

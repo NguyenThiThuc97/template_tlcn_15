@@ -32,6 +32,11 @@ const menus = [
     name : "Manage Category",
     to : "/category-list",
     exact : false
+  },
+  {
+    name : "Manage Orders",
+    to : "/orders-list",
+    exact : false
   }
 ]
 
@@ -66,9 +71,12 @@ class Menu extends Component {
   
   render() {
     var {isLogin} = this.state
-    var loggedUser = localStorage.getItem("user")
-    if(loggedUser !== null){
-      isLogin = true
+    var loggedUser = JSON.parse(localStorage.getItem('user'))
+    if(loggedUser){
+      if(loggedUser.userType == "employee")
+      {
+        isLogin = true
+      }
     }
     window.addEventListener('storage', function(e){
       this.console.log(e)
@@ -84,10 +92,23 @@ class Menu extends Component {
             { this.showMenus(menus) }
             </ul>
             <ul className="nav navbar-nav navbar-right">
-            { (isLogin === false) ? 
+            <li className="dropdown">
+                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span className="caret" /></a>
+                { (isLogin === false) ? 
+                <ul className="dropdown-menu">
+                    <li><Route><Link to = "/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></Route></li>
+                </ul>:
+                <ul className="dropdown-menu">
+                    <li><Route><Link to = "/logout"><span className="glyphicon glyphicon-log-in"></span> Log Out</Link></Route></li>
+                    <li><Route><Link to = "/edit-profile"><span className="glyphicon glyphicon-user"></span> My Profile</Link></Route></li>
+                    <li><a href="#">Change Password</a></li>
+                </ul>
+                }
+            </li>
+            {/* { (isLogin === false) ? 
               <li><Route><Link to = "/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></Route></li> : 
-              <li><Route><Link to = "/logout"><span className="glyphicon glyphicon-log-in"></span> Log Out</Link></Route></li>}
-            </ul>
+              <li><Route><Link to = "/logout"><span className="glyphicon glyphicon-log-in"></span> Log Out</Link></Route></li>} */}
+              </ul>
           </div>
         </nav>
         

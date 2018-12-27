@@ -12,16 +12,15 @@ class CategoryListPage extends Component {
         this.state = {
             categories : [],
             isLoad : false, 
+            loggedInUser : JSON.parse(localStorage.getItem('user'))
         }
     }
 
     componentDidMount(){
-        var loggedInUser = JSON.parse(localStorage.getItem('user'))
         callAPI("category", "GET", null).then(res =>{
             this.setState({
                 categories : res.data,
                 isLoad : true,
-                loggedInUser : loggedInUser
             })
         })
     }
@@ -62,7 +61,9 @@ class CategoryListPage extends Component {
         {
             return <Redirect to = "/login" />
         }
-
+        else if(loggedInUser.userType === "customer"){
+            return <div className = "container"><h2>This site is only for ADMINISTRATIVE STAFF</h2></div>
+        }
         if( !isLoad ){
             return <div>Loading...</div>
         }

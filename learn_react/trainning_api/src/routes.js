@@ -22,6 +22,8 @@ import ProductDetailActionPage from './pages/product/productDetailActionPage/pro
 
 import CategoryActionPage from './pages/category/categoryActionPage/categoryActionPage';
 import CategoryListPage from './pages/category/categoryListPage/categoryListPage'
+import UserInfor from './pages/profilePage/userInfor';
+import OrdersPage from './pages/ordersPage/ordersPage';
 
 const routes = [
     {
@@ -119,6 +121,21 @@ const routes = [
         exact : false,
         main : ({match, history}) => <CategoryActionPage match = {match} history = {history}/>
     },
+    {//orders
+        path : '/orders-list',
+        exact : false,
+        main : ({history}) => <OrdersPage history = {history}/>
+    },
+    // {
+    //     path : "/category/add",
+    //     exact : false,
+    //     main : ({history}) => <CategoryActionPage history = {history}/>
+    // },
+    // {
+    //     path : "/category/edit/:id",
+    //     exact : false,
+    //     main : ({match, history}) => <CategoryActionPage match = {match} history = {history}/>
+    // },
     //login
     {
         path : "/login",
@@ -130,6 +147,12 @@ const routes = [
         path : "/logout",
         exact : false,
         main : ({history}) => <LogOut history = {history}/>
+    },
+    //edit-profile//employee
+    {
+        path : "/edit-profile",
+        exact : false,
+        main : ({history}) => <UserInfor history = {history}/>
     },
     {
         path : "",

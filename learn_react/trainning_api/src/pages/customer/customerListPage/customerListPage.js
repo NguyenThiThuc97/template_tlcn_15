@@ -13,17 +13,15 @@ class CustomerListPage extends Component {
         this.state = {
             customers : [],
             isLoad : false,
-            loggedInUser : ""
+            loggedInUser : JSON.parse(localStorage.getItem('user'))
         }
     }
 
     componentDidMount(){
-        var loggedInUser = JSON.parse(localStorage.getItem('user'))
         callAPI("customer", "GET", null).then(res =>{
             this.setState({
                 customers : res.data,
                 isLoad : true,
-                loggedInUser : loggedInUser
             })
         })
     }
@@ -65,7 +63,9 @@ class CustomerListPage extends Component {
         {
             return <Redirect to = "/login" />
         }
-
+        else if(loggedInUser.userType === "customer"){
+            return <div className = "container"><h2>This site is only for ADMINISTRATIVE STAFF</h2></div>
+        }
         if( !isLoad ){
             return <div>Loading...</div>
         }
