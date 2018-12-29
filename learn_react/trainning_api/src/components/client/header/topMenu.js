@@ -11,7 +11,7 @@ class TopMenu extends Component {
             username : "",
             password : "",
             userType : "customer",
-            isLogin : false,
+            isLogin : JSON.parse(localStorage.getItem("cart")) ? true : false,
             cart : [],
             old_pwd : "",
             new_pwd : ""
@@ -64,7 +64,7 @@ class TopMenu extends Component {
         this.setState ({
             isLogin : false
         })
-        return <Redirect to = "/"/>
+        return <Redirect to = "/logout"/>
     }
 
     onChangePwd = (e) => {
@@ -84,13 +84,19 @@ class TopMenu extends Component {
         document.getElementById("hidePopUpUpdatePwd").click();
     }
 
+    componentDidUpdate(prevProps, prevState){
+        // console.log(prevState)
+        // console.log(this.state.isLogin)
+    }
+
     render() {
+        window.addEventListener('storage', e => {console.log(e)})
         var {isLogin} = this.state
-        var loggedUser = JSON.parse(localStorage.getItem('user'))
-        if(loggedUser !== null){
-            if(loggedUser.userType === "customer")
-                isLogin = true
-        }
+        // var loggedUser = JSON.parse(localStorage.getItem('user'))
+        // if(loggedUser !== null){
+        //     if(loggedUser.userType === "customer")
+        //         isLogin = true
+        // }
         return (
             <nav className="navbar navbar-inverse">
                 <div className="container-fluid">
@@ -99,23 +105,40 @@ class TopMenu extends Component {
                         <li><a href="#"><span className="glyphicon glyphicon-home"></span></a></li>
                         <li className="dropdown">
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span className="caret" /></a>
-                            { (isLogin === false) ? 
+                            {/* <CartContext.Consumer>
+                                {({cartItems}) => cartItems.length > 0 ? this.setState({isLogin : true}) : this.setState({isLogin : false})}
+                            </CartContext.Consumer>
+                            {console.log(this.state.isLogin)} */}
+                            {/* <CartContext.Consumer>
+                                {({cartItems}) => console.log(cartItems.length === 0)}
+                            </CartContext.Consumer> */}
+                            <CartContext.Consumer>
+                            { ({cartItems}) => cartItems  ?   
                             <ul className="dropdown-menu">
-                                <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
-                            </ul>:
-                            <ul className="dropdown-menu">
-                                <li><a href="#" data-toggle="modal" onClick = {this.logOut}><span className="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                                {/* <li><a href="#" data-toggle="modal" onClick = {this.logOut}><span className="glyphicon glyphicon-log-in"></span> Logout</a></li> */}
+                                <CartContext.Consumer>
+                                    {({logout}) => <li><a href="#" data-toggle="modal" onClick = {() => logout()}><span className="glyphicon glyphicon-log-in"></span> Logout</a></li>}
+                                </CartContext.Consumer>
+                                {/* <li><Route><Link to = "/logout"><span className="glyphicon glyphicon-log-in"></span> Logout</Link></Route></li> */}
                                 <li><Route><Link to = "/edit-profile"><span className="glyphicon glyphicon-user"></span> My Profile</Link></Route></li>
                                 <li><a href="#" data-toggle="modal" data-target="#modalUpdatePwd">Change Password</a></li>
                             </ul>
-                            }
+                            : 
+                            <ul className="dropdown-menu">
+                            {}
+                                <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
+                                {/* <CartContext.Consumer>
+                                {({login}) => <li><a href="#" data-toggle="modal" onClick = {() => login(this.state.username, this.state.password, this.state.userType)}><span className="glyphicon glyphicon-log-in"></span> Login</a></li>}
+                                </CartContext.Consumer> */}
+                            </ul>
+                            }</CartContext.Consumer>
                         </li>
                         </ul>
                         
                         <ul className="nav navbar-nav navbar-right">
                             <li className="dropdown">
                                 <CartContext.Consumer>
-                                    {({cartItems}) => <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-shopping-cart"></span> Cart ({cartItems.length})<span className="caret" /></a>}
+                                    {({cartItems}) => <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-shopping-cart"></span> Cart ({cartItems?cartItems.length : "0"})<span className="caret" /></a>}
                                 </CartContext.Consumer>
                                 
                                 <ul className="dropdown-menu">
@@ -140,7 +163,7 @@ class TopMenu extends Component {
                             <h4 className="modal-title">Login Form</h4>
                         </div>
                         
-                        <form onSubmit = {this.onLogin}>
+                        <form>
                             <div className="modal-body">
                                 <div className = "row pdt-20">
                                     <div className = "col-sm-3">
@@ -160,7 +183,9 @@ class TopMenu extends Component {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="submit" className="btn btn-success">Login</button>
+                            <CartContext.Consumer>
+                            {({onLogin}) => <button onClick = {() => onLogin(this.state.username, this.state.password, this.state.userType)} type="button" className="btn btn-success">Login</button>}
+                            </CartContext.Consumer>
                                 <button type="button" className="btn btn-danger" id="hidePopUpBtn" data-dismiss="modal">Close</button>
                             </div>
                         </form>

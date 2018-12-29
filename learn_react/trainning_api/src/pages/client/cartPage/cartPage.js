@@ -68,7 +68,7 @@ class CartPage extends Component {
                     </CartContext.Consumer>
                     
                     <CartContext.Consumer>
-                        {({cartItems}) => <h4>Total : {this.summaryOrders(cartItems)}</h4>}
+                        {({cartItems}) => <h4>Total : {cartItems ? this.summaryOrders(cartItems): "0"}</h4>}
                     </CartContext.Consumer>
 
                     <CartContext.Consumer>
@@ -83,19 +83,22 @@ class CartPage extends Component {
     showProductCarts(cartItems){
         
         var result = null
-        if(cartItems.cartItems.length > 0)
-        {
-            
-            result = cartItems.cartItems.map((cartItem, index) => {
+        if(cartItems.cartItems){
+            if(cartItems.cartItems.length > 0)
+            {
                 
-                return <CartItem
-                    key = {index}
-                    cartItem = {cartItem}
-                    index = {index}
-                    // onDelete = {this.onDelete}
-                />
-            })
+                result = cartItems.cartItems.map((cartItem, index) => {
+                    
+                    return <CartItem
+                        key = {index}
+                        cartItem = {cartItem}
+                        index = {index}
+                        // onDelete = {this.onDelete}
+                    />
+                })
+            }
         }
+        
         return result;
     }
 }

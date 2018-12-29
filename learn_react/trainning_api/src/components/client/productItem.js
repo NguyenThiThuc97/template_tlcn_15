@@ -42,14 +42,14 @@ class ProductItem extends Component {
             // console.log(this.props)
             
             document.getElementById(`hideProductDetail`+product_id).click();
-            var path = this.props.path
+            // var path = this.props.path
             
-            if(path === "/"){
-                return <Redirect to = "/contact"/>
-            }
-            else {
-                return <Redirect to = {`${path}${this.props.product.id}`}/>
-            }
+            // if(path === "/"){
+            //     return <Redirect to = "/contact"/>
+            // }
+            // else {
+            //     return <Redirect to = {`${path}${this.props.product.id}`}/>
+            // }
             
             // console.log(`category/${this.props.product.id}`)
             // return <Redirect to = {`/category/${this.props.product.id}`}/>
@@ -77,9 +77,9 @@ class ProductItem extends Component {
                         <img src="http://baomoiso.net/wp-content/themes/news/images/no-hinh.jpg" className="img-fluid image" alt="smaple image"/>
                         }
                         <div className="middle">
-                            <div className="text"><button className = "btn btn-default" data-toggle="modal" data-target={`#product`+product_id}><i className = "fa fa-shopping-cart"></i> Add To Cart</button></div>
+                            <div className="text image-title"><button className = "btn btn-default" data-toggle="modal" data-target={`#product`+product_id}><i className = "fa fa-shopping-cart"></i> Add To Cart</button></div>
                         </div>
-                        <div className = "title pdt-20">
+                        <div className = "image-title pdt-20">
                             <b>{product.name}</b>
                         </div>
                     </div>   

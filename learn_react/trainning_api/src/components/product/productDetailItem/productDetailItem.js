@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
+import Color from '../../color/color';
 class ProductDetailItem extends Component {
     onDelete = (id) =>{
         if(confirm("Are you sure?")){ //eslint-disable-line
@@ -18,7 +19,7 @@ class ProductDetailItem extends Component {
             <td>{index + 1}</td>
             <td>{product_id}</td>
             <td>{size}</td>
-            <td>{color}</td>
+            <td><Color value = {color}></Color></td>
             <td>{productDetail.price}</td>
             <td>{productDetail.quantity}</td>
             <td>{productDetail.date_received}</td>

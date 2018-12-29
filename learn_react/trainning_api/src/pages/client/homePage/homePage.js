@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Slide from "./../../../components/client/home/slide"
 import callAPI from '../../../utils/apiCaller';
 import ProductItem from "./../../../components/client/productItem"
+import {Route, Link} from 'react-router-dom'
 
 class HomePage extends Component {
 
@@ -287,7 +288,7 @@ class HomePage extends Component {
                                                 {this.showProduct(productMan)}    
                                                 </div>
                                                 <div className = "row pdt-45">
-                                                    <button className = "default"> show more</button>
+                                                <Route><Link to = "/age_type/Man"><button className = "btn btn-success"> show more</button></Link></Route>
                                                 </div>
                                             </div>
                                         </div>
@@ -299,7 +300,7 @@ class HomePage extends Component {
                                                 {this.showProduct(productWoman)}    
                                                 </div>
                                                 <div className = "row pdt-45">
-                                                    <button className = "btn btn-success"> show more</button>
+                                                    <Route><Link to = "/age_type/Woman"><button className = "btn btn-success"> show more</button></Link></Route>
                                                 </div>
                                             </div>
                                             <div className = "col-sm-5">

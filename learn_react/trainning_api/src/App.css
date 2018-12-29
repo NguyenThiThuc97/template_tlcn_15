@@ -45,12 +45,18 @@
 .pdt-20 {
   padding-top: 20px;
 }
+.pdt-10 {
+  padding-top: 10px;
+}
 .padding-form {
   padding: 50px
 }
 .navbar-header{
   margin-left:5px;
   width:100%;
+}
+.image-title {
+  text-align: center
 }
 /* Remove the navbar's default margin-bottom and rounded borders */ 
 .navbar {
@@ -219,6 +225,7 @@ section .section-title {
 }
 .banner {
   position: relative;
+  
 }
 .text-block {
   position: absolute;
