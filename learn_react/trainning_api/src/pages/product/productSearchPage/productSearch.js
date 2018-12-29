@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import callAPI, { callImage } from '../../../utils/apiCaller';
 import ProductItem from '../../../components/client/productItem';
 import Color from '../../../components/color/color';
+import LoadingOverlay from 'react-loading-overlay';
 
 class ProductSearch extends Component {
 
@@ -21,6 +22,20 @@ class ProductSearch extends Component {
             this.setState({
                 isLoad : true,
                 product : res.data
+            })
+            // console.log(res.data)
+        })
+    }
+
+    componentWillReceiveProps(newprops){
+        this.setState({
+            isLoad : false
+        })
+        callAPI(`product/${this.props.match.params.id}`, "GET", null, null).then(res => {
+            
+            this.setState({
+                product : res.data,
+                isLoad : true
             })
             // console.log(res.data)
         })

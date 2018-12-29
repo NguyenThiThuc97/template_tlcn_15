@@ -15,11 +15,15 @@ class ProductCategoryPage extends Component {
         }
     }
     componentWillReceiveProps(newprops){
+        this.setState({
+            isLoad : false
+        })
         var category = newprops.match.params.id
         callAPI(`product_category/${category}`, "GET", null, null).then(res => {
             this.setState({
                 products : res.data,
-                category : category
+                category : category,
+                isLoad :true
             })
         })
     }
