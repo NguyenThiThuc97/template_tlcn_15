@@ -26,25 +26,30 @@ class LoginPage extends Component {
         e.preventDefault();
         var { userType, username } = this.state
         var {history} = this.props
-        callAPI("login", "POST", this.state).then(res => {
-            if(res.data.statusLogin){
-                localStorage.setItem("user", JSON.stringify({
-                    userType : userType,
-                    username : username,
-                    userInfor : res.data.user
-                }))
-                if(userType == "employee"){
-                    history.push("/admin")
+        if(username.length > 0 && this.state.password.length > 0){
+            callAPI("login", "POST", this.state).then(res => {
+                if(res.data.statusLogin){
+                    localStorage.setItem("user", JSON.stringify({
+                        userType : userType,
+                        username : username,
+                        userInfor : res.data.user
+                    }))
+                    if(userType == "employee"){
+                        history.push("/admin")
+                    }
+                    else {
+                        alert("user is not logged in this site!!!")
+                        localStorage.removeItem("user")
+                    }
                 }
                 else {
-                    alert("user is not logined in this site!!!")
-                    localStorage.removeItem("user")
+                    alert(res.data.result.message)
                 }
-            }
-            else {
-                alert(res.data.result.message)
-            }
-        })
+            })
+        }
+        else{
+            alert("please fill both username and password!!!")
+        }
     }
 
     render() {

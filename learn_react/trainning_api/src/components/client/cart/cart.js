@@ -179,33 +179,37 @@ export class CartProvider extends Component {
             password : password,
             userType : userType
         }
-        
-        callAPI("login", "POST", userLogin).then(res => {
-            if(res.data.statusLogin){
-                if(localStorage.getItem("user")){
-                    alert("user was logged")
+        if(username.length > 0 && password.length > 0) {
+            callAPI("login", "POST", userLogin).then(res => {
+                if(res.data.statusLogin){
+                    if(localStorage.getItem("user")){
+                        alert("user was logged")
+                    }
+                    else {
+                        localStorage.setItem("user", JSON.stringify({
+                            userType : userType,
+                            username : username,
+                            userInfor : res.data.user
+                        }))
+                        var cart = []
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        this.setState ({
+                            isLogin : true,
+                            cartItems : cart
+                        })
+                        document.getElementById("hidePopUpBtn").click();
+                        return <Redirect to = "/"/>
+                    }
+                    document.getElementById("hidePopUpBtn").click();
                 }
                 else {
-                    localStorage.setItem("user", JSON.stringify({
-                        userType : userType,
-                        username : username,
-                        userInfor : res.data.user
-                    }))
-                    var cart = []
-                    localStorage.setItem("cart", JSON.stringify(cart));
-                    this.setState ({
-                        isLogin : true,
-                        cartItems : cart
-                    })
-                    document.getElementById("hidePopUpBtn").click();
-                    return <Redirect to = "/"/>
+                    alert(res.data.result.message)
                 }
-                document.getElementById("hidePopUpBtn").click();
-            }
-            else {
-                alert(res.data.result.message)
-            }
-        })
+            })
+        }
+        else {
+            alert("please fill both username and password!!!")
+        }
     }
 
     render() {
