@@ -69,7 +69,7 @@ class CompanyListPage extends Component {
         }
         else{
             return (
-                <div className="row">
+                <div className="row pdt-45">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <Link to = "/company/add" className="btn btn-info mb-10">Add a new company</Link>
                     <CompanyList>

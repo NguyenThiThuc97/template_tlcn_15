@@ -110,7 +110,7 @@ class CompanyActionPage extends Component {
     }
 
     render() {
-        var { username, fullname, phone, mail, address, department, password, image } = this.state
+        var { id, username, fullname, phone, mail, address, department, password, image } = this.state
         
         return (
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -153,16 +153,20 @@ class CompanyActionPage extends Component {
                         value = { !!(phone) ? phone: "" }
                     />
                 </div>
-                {/* <div className="form-group">
+                {id ? 
+                <div className="form-group">
+                    
+                </div>:
+                <div className="form-group">
                     <label> Password</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        name = "password" 
-                        onChange = { this.onChange }
-                        value = { password }
-                    />
-                </div> */}
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            name = "password" 
+                            onChange = { this.onChange }
+                            value = { password }
+                        />
+                </div>}
                 <div className="form-group">
                     <label> Address</label>
                     <input 

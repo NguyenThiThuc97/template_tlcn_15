@@ -97,7 +97,7 @@ class LoginPage extends Component {
                     <label htmlFor = "password" > Password: </label>
                     <input 
                         className="form-control"
-                        type="text" 
+                        type="password" 
                         style={{width: '200px'}} 
                         placeholder = "password" 
                         name = "password"
